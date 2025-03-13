@@ -44,7 +44,6 @@ class _MyWidgetState extends State<MyWidget> {
         debugShowCheckedModeBanner: false,
         onGenerateRoute: appRouter.generateRoute,
         home: Scaffold(
-          // appBar: AppBar(),
           body: BottomNavigation(),
         ));
   }

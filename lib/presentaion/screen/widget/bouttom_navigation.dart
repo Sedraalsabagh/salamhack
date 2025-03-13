@@ -2,6 +2,8 @@ import 'package:devloper_app/presentaion/screen/Home.dart';
 import 'package:devloper_app/presentaion/screen/cv_screen.dart';
 import 'package:flutter/material.dart';
 
+import '../profile_screen.dart';
+
 class BottomNavigation extends StatefulWidget {
   const BottomNavigation({super.key});
 
@@ -14,7 +16,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
 
   final List<Widget> pages = const [
     HomePage(),
-    CvScreen(),
+    ProfileScreen(),
     Placeholder(),
     Placeholder(),
   ];
