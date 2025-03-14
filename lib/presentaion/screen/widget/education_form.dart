@@ -1,13 +1,17 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
-
 import 'custom_field.dart';
 
 class EducationForm extends StatelessWidget {
   final int index;
+  final List<TextEditingController> controllers;
   final VoidCallback onRemove;
 
-  const EducationForm({super.key, required this.index, required this.onRemove});
+  const EducationForm(
+      {super.key,
+      required this.index,
+      required this.controllers,
+      required this.onRemove});
 
   @override
   Widget build(BuildContext context) {
@@ -52,15 +56,16 @@ class EducationForm extends StatelessWidget {
                 ),
                 child: Column(
                   children: [
-                    _buildCustomField(context, 'Degree', Icons.school),
                     _buildCustomField(
-                        context, 'Institution', Icons.location_city),
-                    _buildCustomField(
-                        context, 'Description', Icons.description),
-                    _buildCustomField(
-                        context, 'Start Date', Icons.calendar_month),
-                    _buildCustomField(
-                        context, 'End Date', Icons.edit_calendar_outlined),
+                        context, 'Degree', Icons.school, controllers[0]),
+                    _buildCustomField(context, 'Institution',
+                        Icons.location_city, controllers[1]),
+                    _buildCustomField(context, 'Description', Icons.description,
+                        controllers[2]),
+                    _buildCustomField(context, 'Start Date',
+                        Icons.calendar_month, controllers[3]),
+                    _buildCustomField(context, 'End Date',
+                        Icons.edit_calendar_outlined, controllers[4]),
                   ],
                 ),
               ),
@@ -75,32 +80,36 @@ class EducationForm extends StatelessWidget {
     BuildContext context,
     String hint,
     IconData icon,
+    TextEditingController controller,
   ) {
     return Padding(
-        padding: const EdgeInsets.only(bottom: 12.0),
-        child: Column(children: [
+      padding: const EdgeInsets.only(bottom: 12.0),
+      child: Column(
+        children: [
           FadeInDown(
-              duration: const Duration(milliseconds: 650),
-              delay: const Duration(milliseconds: 200),
-              child: Form(
-                // key: _formKey,
-                child: Column(
-                  children: [
-                    CustomField(
-                      controller: TextEditingController(),
-                      icon: icon,
-                      hint: hint,
-                      gradientColors: [Colors.purple, Colors.deepPurpleAccent],
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'This field cannot be empty';
-                        }
-                        return null;
-                      },
-                    ),
-                  ],
-                ),
-              ))
-        ]));
+            duration: const Duration(milliseconds: 650),
+            delay: const Duration(milliseconds: 200),
+            child: Form(
+              child: Column(
+                children: [
+                  CustomField(
+                    controller: controller,
+                    icon: icon,
+                    hint: hint,
+                    gradientColors: [Colors.purple, Colors.deepPurpleAccent],
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'This field cannot be empty';
+                      }
+                      return null;
+                    },
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

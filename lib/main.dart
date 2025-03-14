@@ -1,24 +1,23 @@
 import 'package:devloper_app/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'business_logic/cubit/auth_cubit.dart';
 import 'data/repository/auth.dart';
 import 'data/webService/auth.dart';
 import 'presentaion/screen/widget/bouttom_navigation.dart';
 
-void main() {
-  runApp(
-    MultiBlocProvider(
-      providers: [
-        BlocProvider<AuthCubit>(
-          create: (context) =>
-              AuthCubit(AuthRepository(authWebServices: AuthWebServices())),
-        ),
-      ],
-      child: MyWidget(appRouter: AppRouter()),
-    ),
-  );
-}
+// void main() {
+//   runApp(
+//     MultiBlocProvider(
+//       providers: [
+//         BlocProvider<AuthCubit>(
+//           create: (context) =>
+//               AuthCubit(AuthRepository(authWebServices: AuthWebServices())),
+//         ),
+//       ],
+//       child: MyWidget(appRouter: AppRouter()),
+//     ),
+//   );
+// }
 
 class MyWidget extends StatefulWidget {
   final AppRouter appRouter;
