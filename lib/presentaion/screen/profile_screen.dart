@@ -41,11 +41,10 @@ class ProfileScreen extends StatelessWidget {
               padding: const EdgeInsets.only(bottom: 16),
               children: const [
                 SectionTitle(title: 'Sections'),
+
                 ListItem(icon: Icons.person_pin, title: 'Personal Details'),
                 ListItem(icon: Icons.summarize_rounded, title: 'Summary'),
                 ListItem(icon: Icons.school, title: 'Education'),
-
-                ListItem(icon: Icons.play_lesson, title: 'Courses'),
                 ListItem(icon: CupertinoIcons.text_badge_star, title: 'Skills'),
 
                 SizedBox(
@@ -55,8 +54,8 @@ class ProfileScreen extends StatelessWidget {
 
                 ListItem(icon: Icons.workspace_premium, title: 'Experience'),
                 ListItem(icon: Icons.rocket_launch, title: 'Projects'),
-                ListItem(icon: Icons.article_rounded, title: 'Reference'),
-                ListItem(icon: CupertinoIcons.signature, title: 'Signature'),
+                ListItem(icon: Icons.play_lesson, title: 'trainings_courses'),
+
                 // ListItem(icon: Icons.add, title: 'Add More Section'),
               ],
             ),

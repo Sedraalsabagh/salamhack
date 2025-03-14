@@ -24,14 +24,14 @@ class ListItem extends StatelessWidget {
         title: Text(title),
         tileColor: Colors.white,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => PersonalDetails(),
-            ),
-          );
-        },
+        // onTap: () {
+        //   Navigator.push(
+        //     context,
+        //     MaterialPageRoute(
+        //       builder: (context) => PersonalDetails(),
+        //     ),
+        //   );
+        // },
       ),
     );
   }
