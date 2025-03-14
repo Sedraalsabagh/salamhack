@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'course_screen.dart';
 import 'education_screen.dart';
 import 'personal_details.dart';
+import 'project_screen.dart';
 import 'widget/Listitem.dart';
 import 'widget/bottom_button.dart';
 import 'widget/section_title.dart';
@@ -49,7 +51,7 @@ class ProfileScreen extends StatelessWidget {
                   Navigator.push(context, MaterialPageRoute(builder: (context) => const EducationScreen()));
                 }),
                   ListItem(icon: Icons.play_lesson, title: 'Courses', onTap: () {
-                  // Navigator.push(context, MaterialPageRoute(builder: (context) => const CoursesScreen()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const CoursesScreen()));
                 }),
                 ListItem(icon: CupertinoIcons.text_badge_star, title: 'Skills', onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) => const SkillsScreen()));
@@ -58,11 +60,11 @@ class ProfileScreen extends StatelessWidget {
                 const SizedBox(height: 10),
                 const SectionTitle(title: 'More Sections'),
                 ListItem(icon: Icons.workspace_premium, title: 'Experience', onTap: () {
-                  // Navigator.push(context, MaterialPageRoute(builder: (context) => const ExperienceScreen()));
+                  //  Navigator.push(context, MaterialPageRoute(builder: (context) => const ExperienceScreen()));
                  }),
               
                 ListItem(icon: Icons.rocket_launch, title: 'Projects', onTap: () {
-                  // Navigator.push(context, MaterialPageRoute(builder: (context) => const ProjectsScreen()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const ProjectsScreen()));
                 }),
              
               ],
