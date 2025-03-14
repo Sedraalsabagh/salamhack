@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'course_screen.dart';
 import 'education_screen.dart';
+import 'experience_screen.dart';
 import 'personal_details.dart';
 import 'project_screen.dart';
 import 'widget/Listitem.dart';
@@ -60,7 +61,7 @@ class ProfileScreen extends StatelessWidget {
                 const SizedBox(height: 10),
                 const SectionTitle(title: 'More Sections'),
                 ListItem(icon: Icons.workspace_premium, title: 'Experience', onTap: () {
-                  //  Navigator.push(context, MaterialPageRoute(builder: (context) => const ExperienceScreen()));
+                   Navigator.push(context, MaterialPageRoute(builder: (context) => const ExperienceScreen()));
                  }),
               
                 ListItem(icon: Icons.rocket_launch, title: 'Projects', onTap: () {
