@@ -2,29 +2,16 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'custom_field.dart';
 
-class SkillForm extends StatefulWidget {
+class SkillForm extends StatelessWidget {
   final int index;
   final VoidCallback onRemove;
-
-  const SkillForm({super.key, required this.index, required this.onRemove});
-
-  @override
-  _SkillFormState createState() => _SkillFormState();
-}
-
-class _SkillFormState extends State<SkillForm> {
-  final TextEditingController _skillNameController = TextEditingController();
-  final TextEditingController _proficiencyLevelController =
-      TextEditingController();
-
-  final _formKey = GlobalKey<FormState>();
-
-  @override
-  void dispose() {
-    _skillNameController.dispose();
-    _proficiencyLevelController.dispose();
-    super.dispose();
-  }
+  final List<TextEditingController> controllers;
+  const SkillForm({
+    super.key,
+    required this.index,
+    required this.onRemove,
+    required this.controllers,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -46,15 +33,16 @@ class _SkillFormState extends State<SkillForm> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Skill ${widget.index + 1}',
+                      'Skill ${index + 1}',
                       style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600),
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                     IconButton(
                       icon: const Icon(Icons.delete, color: Colors.white),
-                      onPressed: widget.onRemove,
+                      onPressed: onRemove,
                     ),
                   ],
                 ),
@@ -63,10 +51,8 @@ class _SkillFormState extends State<SkillForm> {
                 padding: const EdgeInsets.only(right: 6, left: 6, top: 12),
                 child: Column(
                   children: [
-                    _buildCustomField(context, 'Skill Name', Icons.star,
-                        _skillNameController),
-                    _buildCustomField(context, 'Proficiency Level',
-                        Icons.bar_chart, _proficiencyLevelController),
+                    _buildCustomField(context, 'Skill Name', Icons.star, controllers[0]),
+                    _buildCustomField(context, 'Proficiency Level', Icons.bar_chart, controllers[1]),  
                   ],
                 ),
               ),
@@ -77,8 +63,7 @@ class _SkillFormState extends State<SkillForm> {
     );
   }
 
-  Widget _buildCustomField(BuildContext context, String hint, IconData icon,
-      TextEditingController controller) {
+  Widget _buildCustomField(BuildContext context, String hint, IconData icon, TextEditingController controller) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 12.0),
       child: Column(
@@ -87,7 +72,6 @@ class _SkillFormState extends State<SkillForm> {
             duration: const Duration(milliseconds: 650),
             delay: const Duration(milliseconds: 200),
             child: Form(
-              key: _formKey,
               child: Column(
                 children: [
                   CustomField(

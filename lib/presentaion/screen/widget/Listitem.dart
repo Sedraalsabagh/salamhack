@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import '../../../constants/Colors.dart';
-import '../personal_details.dart';
 
 class ListItem extends StatelessWidget {
   final IconData icon;
   final String title;
-  const ListItem({super.key, required this.icon, required this.title});
+  final VoidCallback onTap;
+
+  const ListItem({super.key, required this.icon, required this.title, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -24,14 +25,7 @@ class ListItem extends StatelessWidget {
         title: Text(title),
         tileColor: Colors.white,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => PersonalDetails(),
-            ),
-          );
-        },
+        onTap: onTap, // استخدام الـ Callback بدلاً من شاشة ثابتة
       ),
     );
   }

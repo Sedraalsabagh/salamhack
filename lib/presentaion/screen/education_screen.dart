@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'widget/education_form.dart';
-import 'package:animate_do/animate_do.dart';
-import 'custom_field.dart';
-import 'cubit/education_cubit.dart'; // تأكد من أنك تستخدم الـ Cubit المناسب
 
 class EducationScreen extends StatefulWidget {
   const EducationScreen({super.key});
@@ -13,13 +9,18 @@ class EducationScreen extends StatefulWidget {
 }
 
 class _EducationScreenState extends State<EducationScreen> {
-  // قائمة من controllers لإدارة النصوص في كل بطاقة تعليمية
-  List<List<TextEditingController>> controllers = [];
+  final List<List<TextEditingController>> _educationControllers = [];
+  int counter = 1;
+
+  @override
+  void initState() {
+    super.initState();
+    _addEducationForm();
+  }
 
   @override
   void dispose() {
-    // لا تنسى التخلص من الـ controllers بعد الانتهاء
-    for (var controllerList in controllers) {
+    for (var controllerList in _educationControllers) {
       for (var controller in controllerList) {
         controller.dispose();
       }
@@ -27,21 +28,34 @@ class _EducationScreenState extends State<EducationScreen> {
     super.dispose();
   }
 
+  void _addEducationForm() {
+    setState(() {
+      _educationControllers.add([
+        for (var i = 0; i < 5; i++) TextEditingController()
+      ]);
+      counter++;
+    });
+  }
+
+  void _removeEducationForm(int index) {
+    if (_educationControllers.length > 1) {
+      setState(() {
+        _educationControllers[index].forEach((controller) => controller.dispose());
+        _educationControllers.removeAt(index);
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Education",
-            style: TextStyle(
-                color: Colors.white,
-                fontSize: 19,
-                fontWeight: FontWeight.w300)),
+            style: TextStyle(color: Colors.white, fontSize: 19, fontWeight: FontWeight.w300)),
         centerTitle: true,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () {
-            Navigator.pop(context);
-          },
+          onPressed: () => Navigator.pop(context),
         ),
         flexibleSpace: Container(
           decoration: const BoxDecoration(
@@ -53,86 +67,55 @@ class _EducationScreenState extends State<EducationScreen> {
           ),
         ),
       ),
-      body: BlocBuilder<EducationCubit, EducationState>(
-        builder: (context, state) {
-          return Column(
-            children: [
-              Expanded(
-                child: ListView.builder(
-                  itemCount: state.educationList.length,
-                  itemBuilder: (context, index) {
-                    if (controllers.length <= index) {
-                      // إضافة TextEditingController جديد لكل بطاقة
-                      controllers.add([
-                        for (var i = 0; i < 5; i++) TextEditingController()
-                      ]);
-                    }
-                    return EducationForm(
-                      index: index,
-                      controllers: controllers[index], // إرسال الـ controllers
-                      onRemove: () {
-                        context.read<EducationCubit>().removeEducation(index);
-                        controllers
-                            .removeAt(index); // إزالة الـ controller عند الحذف
-                      },
+      body: Column(
+        children: [
+          Expanded(
+            child: ListView.builder(
+              itemCount: _educationControllers.length,
+              itemBuilder: (context, index) {
+                return EducationForm(
+                  key: ValueKey(index),
+                  index: index,
+                  controllers: _educationControllers[index],
+                  onRemove: () => _removeEducationForm(index),
+                );
+              },
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                ElevatedButton.icon(
+                  onPressed: _addEducationForm,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.deepPurpleAccent,
+                    padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                  ),
+                  icon: const Icon(Icons.add, color: Colors.white),
+                  label: const Text("Add", style: TextStyle(color: Colors.white, fontSize: 16)),
+                ),
+                const SizedBox(width: 20),
+                ElevatedButton.icon(
+                  onPressed: () {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                          content: Text("Education data saved successfully!"),
+                          backgroundColor: Colors.purple),
                     );
                   },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.purple,
+                    padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                  ),
+                  icon: const Icon(Icons.save, color: Colors.white),
+                  label: const Text("Save", style: TextStyle(color: Colors.white, fontSize: 16)),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    ElevatedButton.icon(
-                      onPressed: () {
-                        context.read<EducationCubit>().addEducation();
-                        // إضافة controllers جديد لكل بطاقة
-                        controllers.add([
-                          for (var i = 0; i < 5; i++) TextEditingController()
-                        ]);
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.deepPurpleAccent,
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 24, vertical: 12),
-                      ),
-                      icon: const Icon(Icons.add, color: Colors.white),
-                      label: const Text("Add",
-                          style: TextStyle(color: Colors.white, fontSize: 16)),
-                    ),
-                    const SizedBox(width: 20),
-                    ElevatedButton.icon(
-                      onPressed: () {
-                        // تنفيذ منطق الحفظ هنا
-                        for (var controllerList in controllers) {
-                          // طباعة البيانات المدخلة في الـ controllers
-                          for (var controller in controllerList) {
-                            print(controller.text);
-                          }
-                        }
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                              content:
-                                  Text("Education data saved successfully!"),
-                              backgroundColor: Colors.purple),
-                        );
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.purple,
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 24, vertical: 12),
-                      ),
-                      icon: const Icon(Icons.save, color: Colors.white),
-                      label: const Text("Save",
-                          style: TextStyle(color: Colors.white, fontSize: 16)),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          );
-        },
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
