@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+<<<<<<< HEAD
 import 'package:animate_do/animate_do.dart';
 
 import 'widget/custom_field.dart';
@@ -28,9 +29,42 @@ class _PersonalFormState extends State<PersonalForm> {
     _addressController.dispose();
     super.dispose();
   }
+=======
+import 'package:icons_plus/icons_plus.dart';
+import 'widget/custom_field.dart';
+
+class PersonalDetails extends StatefulWidget {
+  const PersonalDetails({super.key});
+>>>>>>> 7b09cbda9806e8b0980fdbe764ee14ba1af69356
+
+  @override
+  _PersonalDetailsState createState() => _PersonalDetailsState();
+}
+
+class _PersonalDetailsState extends State<PersonalDetails> {
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController addressController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController phoneController = TextEditingController();
+  final TextEditingController dobController = TextEditingController();
+  final TextEditingController githubController = TextEditingController();
+  final TextEditingController linkedinController = TextEditingController();
+
+  @override
+  void dispose() {
+    nameController.dispose();
+    addressController.dispose();
+    emailController.dispose();
+    phoneController.dispose();
+    dobController.dispose();
+    githubController.dispose();
+    linkedinController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
+<<<<<<< HEAD
     return Column(
       children: [
         Card(
@@ -81,15 +115,66 @@ class _PersonalFormState extends State<PersonalForm> {
           ),
         ),
       ],
+=======
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          'Personal Details',
+          style: TextStyle(
+              color: Colors.white, fontSize: 19, fontWeight: FontWeight.w300),
+        ),
+        centerTitle: true,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+        flexibleSpace: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                Color.fromARGB(255, 91, 45, 240),
+                Color.fromARGB(255, 141, 20, 141),
+              ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+          ),
+        ),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildCustomField(context, 'Name', Icons.person, nameController),
+              _buildCustomField(context, 'Address', Icons.home, addressController),
+              _buildCustomField(context, 'Email', Icons.email, emailController),
+              _buildCustomField(context, 'Phone', Icons.phone, phoneController),
+              _buildCustomField(context, 'Date of Birth', Icons.cake, dobController),
+              _buildCustomField(context, 'GitHub Link', EvaIcons.github, githubController),
+              _buildCustomField(context, 'LinkedIn account', EvaIcons.linkedin, linkedinController),
+              const SizedBox(height: 20),
+            ],
+          ),
+        ),
+      ),
+>>>>>>> 7b09cbda9806e8b0980fdbe764ee14ba1af69356
     );
   }
 
   Widget _buildCustomField(
+<<<<<<< HEAD
     BuildContext context,
     String hint,
     IconData icon,
     TextEditingController controller,
   ) {
+=======
+      BuildContext context, String hint, IconData icon, TextEditingController controller) {
+>>>>>>> 7b09cbda9806e8b0980fdbe764ee14ba1af69356
     return Padding(
       padding: const EdgeInsets.only(bottom: 12.0),
       child: Column(
@@ -105,12 +190,18 @@ class _PersonalFormState extends State<PersonalForm> {
                     icon: icon,
                     hint: hint,
                     gradientColors: [Colors.purple, Colors.deepPurpleAccent],
+<<<<<<< HEAD
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'This field cannot be empty';
                       }
                       return null;
                     },
+=======
+                    validator: (value) => value == null || value.isEmpty
+                        ? 'This field cannot be empty'
+                        : null,
+>>>>>>> 7b09cbda9806e8b0980fdbe764ee14ba1af69356
                   ),
                 ],
               ),
