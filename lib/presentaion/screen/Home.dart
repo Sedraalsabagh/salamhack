@@ -3,6 +3,8 @@ import 'package:devloper_app/presentaion/screen/widget/opportunity_reco.dart';
 
 import 'package:flutter/material.dart';
 
+import 'widget/bouttom_navigation.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -47,6 +49,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      body: BottomNavigation(),
       appBar: AppBar(
         centerTitle: false,
         title: const UserGreeting(username: "SedraAlsabbagh"),

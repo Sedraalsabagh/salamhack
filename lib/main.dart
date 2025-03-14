@@ -1,49 +1,24 @@
-import 'package:devloper_app/app_router.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'data/repository/auth.dart';
-import 'data/webService/auth.dart';
-import 'presentaion/screen/widget/bouttom_navigation.dart';
+import 'package:devloper_app/presentaion/screen/Home.dart';
+import "package:flutter/material.dart";
+import 'package:devloper_app/presentaion/screen/widget/bouttom_navigation.dart';
 
-// void main() {
-//   runApp(
-//     MultiBlocProvider(
-//       providers: [
-//         BlocProvider<AuthCubit>(
-//           create: (context) =>
-//               AuthCubit(AuthRepository(authWebServices: AuthWebServices())),
-//         ),
-//       ],
-//       child: MyWidget(appRouter: AppRouter()),
-//     ),
-//   );
-// }
-
-class MyWidget extends StatefulWidget {
-  final AppRouter appRouter;
-
-  const MyWidget({Key? key, required this.appRouter}) : super(key: key);
-
-  @override
-  State<MyWidget> createState() => _MyWidgetState();
+void main() {
+  runApp(MyApp());
 }
 
-class _MyWidgetState extends State<MyWidget> {
-  late final AppRouter appRouter;
-
-  @override
-  void initState() {
-    super.initState();
-    appRouter = widget.appRouter;
-  }
-
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        onGenerateRoute: appRouter.generateRoute,
-        home: Scaffold(
-          body: BottomNavigation(),
-        ));
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        body: Stack(
+          children: [
+            Positioned.fill(child: HomePage()),
+            Align(alignment: Alignment.bottomCenter, child: BottomNavigation()),
+          ],
+        ),
+      ),
+    );
   }
 }
