@@ -25,18 +25,7 @@ class ListItem extends StatelessWidget {
         title: Text(title),
         tileColor: Colors.white,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-<<<<<<< HEAD
-        // onTap: () {
-        //   Navigator.push(
-        //     context,
-        //     MaterialPageRoute(
-        //       builder: (context) => PersonalDetails(),
-        //     ),
-        //   );
-        // },
-=======
         onTap: onTap, // استخدام الـ Callback بدلاً من شاشة ثابتة
->>>>>>> 7b09cbda9806e8b0980fdbe764ee14ba1af69356
       ),
     );
   }

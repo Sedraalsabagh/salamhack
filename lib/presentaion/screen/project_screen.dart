@@ -1,61 +1,61 @@
 import 'package:flutter/material.dart';
-import 'widget/education_form.dart';
+import 'widget/project_form.dart';
 
-class EducationScreen extends StatefulWidget {
-  const EducationScreen({super.key});
+class ProjectsScreen extends StatefulWidget {
+  const ProjectsScreen({super.key});
 
   @override
-  _EducationScreenState createState() => _EducationScreenState();
+  _ProjectsScreenState createState() => _ProjectsScreenState();
 }
 
-class _EducationScreenState extends State<EducationScreen> {
-  final List<List<TextEditingController>> _educationControllers = [];
-  int counter = 1;
+class _ProjectsScreenState extends State<ProjectsScreen> {
+  final List<List<TextEditingController>> _projectControllers = [];
 
   @override
   void initState() {
     super.initState();
-    _addEducationForm();
+    _addProject(); 
   }
 
   @override
   void dispose() {
-    for (var controllerList in _educationControllers) {
-      for (var controller in controllerList) {
+    for (var controllers in _projectControllers) {
+      for (var controller in controllers) {
         controller.dispose();
       }
     }
     super.dispose();
   }
 
-  void _addEducationForm() {
+  void _addProject() {
     setState(() {
-      _educationControllers.add([
-        for (var i = 0; i < 5; i++) TextEditingController()
+      _projectControllers.add([
+        TextEditingController(), // Project Title
+        TextEditingController(), // Description
+        TextEditingController(), // Project Link
       ]);
-      counter++;
     });
   }
 
-  void _removeEducationForm(int index) {
-    if (_educationControllers.length > 1) {
-      setState(() {
-        _educationControllers[index].forEach((controller) => controller.dispose());
-        _educationControllers.removeAt(index);
-      });
-    }
+  void _removeProject(int index) {
+    setState(() {
+      _projectControllers[index].forEach((controller) => controller.dispose());
+      _projectControllers.removeAt(index);
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Education",
+        title: const Text("Projects",
             style: TextStyle(color: Colors.white, fontSize: 19, fontWeight: FontWeight.w300)),
         centerTitle: true,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () => Navigator.pop(context),
+          onPressed: () {
+            Navigator.pop(context);
+          },
         ),
         flexibleSpace: Container(
           decoration: const BoxDecoration(
@@ -71,13 +71,13 @@ class _EducationScreenState extends State<EducationScreen> {
         children: [
           Expanded(
             child: ListView.builder(
-              itemCount: _educationControllers.length,
+              itemCount: _projectControllers.length,
               itemBuilder: (context, index) {
-                return EducationForm(
+                return ProjectForm(
                   key: ValueKey(index),
                   index: index,
-                  controllers: _educationControllers[index],
-                  onRemove: () => _removeEducationForm(index),
+                  controllers: _projectControllers[index],
+                  onRemove: () => _removeProject(index),
                 );
               },
             ),
@@ -88,7 +88,7 @@ class _EducationScreenState extends State<EducationScreen> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 ElevatedButton.icon(
-                  onPressed: _addEducationForm,
+                  onPressed: _addProject,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.deepPurpleAccent,
                     padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
@@ -101,8 +101,9 @@ class _EducationScreenState extends State<EducationScreen> {
                   onPressed: () {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
-                          content: Text("Education data saved successfully!"),
-                          backgroundColor: Colors.purple),
+                        content: Text("Projects saved successfully!"),
+                        backgroundColor: Colors.purple,
+                      ),
                     );
                   },
                   style: ElevatedButton.styleFrom(
