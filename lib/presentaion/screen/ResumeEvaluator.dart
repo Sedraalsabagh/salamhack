@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:file_picker/file_picker.dart';
 import 'dart:convert';
 
 class ResumeEvaluatorApp extends StatefulWidget {
@@ -12,18 +13,39 @@ class _ResumeEvaluatorAppState extends State<ResumeEvaluatorApp> {
   final TextEditingController _jobDescriptionController =
       TextEditingController();
   Map<String, dynamic>? evaluationResult;
+  String? selectedFilePath;
 
   void evaluateResume() {
     String jobDescription = _jobDescriptionController.text;
-    if (jobDescription.isEmpty) return;
+    if (jobDescription.isEmpty || selectedFilePath == null) return;
 
     // Simulated API response
     String jsonResponse =
-        '{"match_percentage": 0.1, "missing_keywords": ["Python", "Django", "Flask", "SQLAlchemy", "Data Science", "Machine Learning", "Deep Learning", "TensorFlow", "PyTorch", "Pandas", "NumPy", "Scikit-learn"], "improvement_tips": "The resume lacks mention of Python, which is explicitly required in the job description. Consider adding projects or experience demonstrating proficiency in Python and relevant libraries."}';
+        '{"match_percentage": 0.1, "missing_keywords": ["Python", "Django", "Flask"], "improvement_tips": "The resume lacks mention of Python, which is explicitly required in the job description."}';
 
     setState(() {
       evaluationResult = json.decode(jsonResponse);
     });
+  }
+
+  Future<void> pickResumeFile() async {
+    try {
+      FilePickerResult? result = await FilePicker.platform.pickFiles(
+        type: FileType.any,
+        allowMultiple: false, // يسمح باختيار ملف واحد فقط
+      );
+
+      if (result != null) {
+        setState(() {
+          selectedFilePath = result.files.single.path!;
+        });
+        print("تم اختيار الملف: $selectedFilePath");
+      } else {
+        print("لم يتم اختيار أي ملف.");
+      }
+    } catch (e) {
+      print("خطأ أثناء اختيار الملف: $e");
+    }
   }
 
   @override
@@ -58,19 +80,38 @@ class _ResumeEvaluatorAppState extends State<ResumeEvaluatorApp> {
               ),
               const SizedBox(height: 10),
               ElevatedButton(
+                onPressed: pickResumeFile,
+                style: ElevatedButton.styleFrom(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8)),
+                  backgroundColor: Colors.purple,
+                ),
+                child: const Text('Upload Resume',
+                    style: TextStyle(color: Colors.white, fontSize: 16)),
+              ),
+              if (selectedFilePath != null)
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: Text(
+                    'Selected File: ${selectedFilePath!.split('/').last}',
+                    style: const TextStyle(
+                        fontSize: 14, fontWeight: FontWeight.bold),
+                  ),
+                ),
+              const SizedBox(height: 10),
+              ElevatedButton(
                 onPressed: evaluateResume,
                 style: ElevatedButton.styleFrom(
                   padding:
                       const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
+                      borderRadius: BorderRadius.circular(8)),
                   backgroundColor: const Color(0xFF4A15F4),
                 ),
-                child: const Text(
-                  'Evaluate Resume',
-                  style: TextStyle(color: Colors.white, fontSize: 16),
-                ),
+                child: const Text('Evaluate Resume',
+                    style: TextStyle(color: Colors.white, fontSize: 16)),
               ),
               const SizedBox(height: 20),
               evaluationResult != null
