@@ -112,8 +112,7 @@ Future<void> pickResumeFile() async {
       ),
     );
   }
-
-
+  
   Widget _buildResult() {
     return SingleChildScrollView(
       child: Column(
