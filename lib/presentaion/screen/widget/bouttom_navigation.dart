@@ -1,5 +1,6 @@
 import 'package:devloper_app/presentaion/screen/Home.dart';
-import 'package:devloper_app/presentaion/screen/cv_screen.dart';
+import 'package:devloper_app/presentaion/screen/ResumeEvaluator.dart';
+
 import 'package:flutter/material.dart';
 
 import '../profile_screen.dart';
@@ -17,7 +18,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
   final List<Widget> pages = const [
     HomePage(),
     ProfileScreen(),
-    Placeholder(),
+    ResumeEvaluatorApp(),
     Placeholder(),
   ];
 
