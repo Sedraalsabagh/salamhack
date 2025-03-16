@@ -32,6 +32,7 @@ dependencies:
   cupertino_icons: ^1.0.6
   dio: ^5.7.0
   dotted_dashed_line: ^0.0.3
+  file_picker: ^9.1.0
   flutter:
     sdk: flutter
   flutter_bloc: ^9.0.0
