@@ -3,7 +3,9 @@ class CVModel {
   final String email;
   final String phone;
   final String address;
-  final String summary;
+  
+  final String github;
+  final String linkedin;
   final List<Skill> skills;
   final List<Education> education;
   final List<Project> projects;
@@ -13,7 +15,9 @@ class CVModel {
     required this.email,
     required this.phone,
     required this.address,
-    required this.summary,
+    
+    required this.github,
+    required this.linkedin,
     required this.skills,
     required this.education,
     required this.projects,
@@ -24,7 +28,9 @@ class CVModel {
         "email": email,
         "phone": phone,
         "address": address,
-        "summary": summary,
+        
+        "github": github,
+        "linkedin": linkedin,
         "skills": skills.map((s) => s.toJson()).toList(),
         "education": education.map((e) => e.toJson()).toList(),
         "projects": projects.map((p) => p.toJson()).toList(),
@@ -36,7 +42,9 @@ class CVModel {
       email: json["email"],
       phone: json["phone"],
       address: json["address"],
-      summary: json["summary"],
+     
+      github: json["github"],
+      linkedin: json["linkedin"],
       skills:
           (json["skills"] as List?)?.map((s) => Skill.fromJson(s)).toList() ??
               [],

@@ -9,12 +9,12 @@ class SkillsScreen extends StatefulWidget {
 }
 
 class _SkillsScreenState extends State<SkillsScreen> {
-  final List<List<TextEditingController>> _skillControllers = []; // ✅ قائمة لمتحكمات النماذج
+  final List<List<TextEditingController>> _skillControllers = []; 
 
   @override
   void initState() {
     super.initState();
-    _addSkillForm(); // ✅ إضافة نموذج افتراضي عند فتح الشاشة
+    _addSkillForm(); 
   }
 
   @override

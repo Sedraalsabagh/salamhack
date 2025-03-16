@@ -4,17 +4,15 @@ import 'package:dio/dio.dart';
 import '../models/cvmodel.dart';
 
 class CVWebServices {
-  late Dio dio;
+  final Dio dio;
 
-  CVWebServices() {
-    BaseOptions options = BaseOptions(
-      baseUrl: baseUrl,
-      receiveDataWhenStatusError: true,
-      connectTimeout: Duration(seconds: 60),
-      receiveTimeout: Duration(seconds: 60),
-    );
-    dio = Dio(options);
-  }
+  CVWebServices()
+      : dio = Dio(BaseOptions(
+          baseUrl: baseUrl,
+          receiveDataWhenStatusError: true,
+          connectTimeout: Duration(seconds: 60),
+          receiveTimeout: Duration(seconds: 60),
+        ));
 
   Future<Map<String, dynamic>> createCV(CVModel cvModel) async {
     try {
@@ -30,7 +28,7 @@ class CVWebServices {
       );
       return response.data;
     } catch (e) {
-      print(e);
+      print("Error: $e");
       throw Exception('Error creating CV');
     }
   }

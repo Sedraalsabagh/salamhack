@@ -1,18 +1,23 @@
 import 'package:devloper_app/presentaion/screen/Home.dart';
+import 'package:devloper_app/presentaion/screen/profile_screen.dart';
 import "package:flutter/material.dart";
 
+import 'presentaion/screen/ResumeEvaluator.dart';
+
 class AppRouter {
+  // late AuthRepository authRepository;
+  // late AuthCubit authCubit;
+  AppRouter() {
+    // authRepository = AuthRepository(authWebServices: AuthWebServices());
+    // authCubit = AuthCubit(authRepository);
+  }
+
   Route? generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case '/':
         return MaterialPageRoute(
-          builder: (context) => const HomePage(),
+          builder: (context) => const ProfileScreen(),
         );
-
-      // case signupscreen:
-      //   return MaterialPageRoute(
-      //     builder: (context) => const SignUp(), // 🚀
-      //   );
 
       default:
         return null;

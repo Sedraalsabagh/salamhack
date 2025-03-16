@@ -1,6 +1,9 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:icons_plus/icons_plus.dart';
+import '../../business_logic/cubit/cv_cubit.dart';
+import '../../data/models/cvmodel.dart';
 import 'widget/custom_field.dart';
 
 class PersonalDetails extends StatefulWidget {
@@ -29,6 +32,26 @@ class _PersonalDetailsState extends State<PersonalDetails> {
     githubController.dispose();
     linkedinController.dispose();
     super.dispose();
+  }
+
+     void savePersonalDetails() {
+    final cvCubit = context.read<CvCubit>();
+
+    final cvModel = CVModel(
+      name: nameController.text,
+      address: addressController.text,
+      email: emailController.text,
+      phone: phoneController.text,
+      github: githubController.text,
+      linkedin: linkedinController.text,
+     
+    );
+
+    cvCubit.createCV(cvModel);
+  }
+
+
+    cvCubit.createCV(cvModel);
   }
 
   @override
@@ -66,14 +89,19 @@ class _PersonalDetailsState extends State<PersonalDetails> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _buildCustomField(context, 'Name', Icons.person, nameController),
+            _buildCustomField(context, 'Name', Icons.person, nameController),
               _buildCustomField(context, 'Address', Icons.home, addressController),
               _buildCustomField(context, 'Email', Icons.email, emailController),
               _buildCustomField(context, 'Phone', Icons.phone, phoneController),
-              _buildCustomField(context, 'Date of Birth', Icons.cake, dobController),
+              _buildCustomField(context, 'Summary', Icons.description, summaryController),
               _buildCustomField(context, 'GitHub Link', EvaIcons.github, githubController),
-              _buildCustomField(context, 'LinkedIn account', EvaIcons.linkedin, linkedinController),
+              _buildCustomField(context, 'LinkedIn Account', EvaIcons.linkedin, linkedinController),
               const SizedBox(height: 20),
+               Center(
+                child: ElevatedButton(
+                  onPressed: savePersonalDetails,
+                  child: const Text('Save'),
+                ),
             ],
           ),
         ),
@@ -81,8 +109,8 @@ class _PersonalDetailsState extends State<PersonalDetails> {
     );
   }
 
-  Widget _buildCustomField(
-      BuildContext context, String hint, IconData icon, TextEditingController controller) {
+  Widget _buildCustomField(BuildContext context, String hint, IconData icon,
+      TextEditingController controller) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 12.0),
       child: Column(

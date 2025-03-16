@@ -49,7 +49,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BottomNavigation(),
+      
       appBar: AppBar(
         centerTitle: false,
         title: const UserGreeting(username: "SedraAlsabbagh"),
