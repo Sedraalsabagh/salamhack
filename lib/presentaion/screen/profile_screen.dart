@@ -44,30 +44,62 @@ class ProfileScreen extends StatelessWidget {
               padding: const EdgeInsets.only(bottom: 16),
               children: [
                 const SectionTitle(title: 'Sections'),
-                ListItem(icon: Icons.person_pin, title: 'Personal Details', onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => const PersonalDetails()));
-                }),
-                ListItem(icon: Icons.summarize_rounded, title: 'Summary', onTap: () {}),
-                ListItem(icon: Icons.school, title: 'Education', onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => const EducationScreen()));
-                }),
-                  ListItem(icon: Icons.play_lesson, title: 'Courses', onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => const CoursesScreen()));
-                }),
-                ListItem(icon: CupertinoIcons.text_badge_star, title: 'Skills', onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => const SkillsScreen()));
-                }),
+                // ListItem(icon: Icons.person_pin, title: 'Personal Details', onTap: () {
+                //   Navigator.push(context, MaterialPageRoute(builder: (context) => const PersonalDetails()));
+                // }),
+                ListItem(
+                    icon: Icons.summarize_rounded,
+                    title: 'Summary',
+                    onTap: () {}),
+                ListItem(
+                    icon: Icons.school,
+                    title: 'Education',
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const EducationScreen()));
+                    }),
+                ListItem(
+                    icon: Icons.play_lesson,
+                    title: 'Courses',
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const CoursesScreen()));
+                    }),
+                ListItem(
+                    icon: CupertinoIcons.text_badge_star,
+                    title: 'Skills',
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const SkillsScreen()));
+                    }),
 
                 const SizedBox(height: 10),
                 const SectionTitle(title: 'More Sections'),
-                ListItem(icon: Icons.workspace_premium, title: 'Experience', onTap: () {
-                   Navigator.push(context, MaterialPageRoute(builder: (context) => const ExperienceScreen()));
-                 }),
-              
-                ListItem(icon: Icons.rocket_launch, title: 'Projects', onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => const ProjectsScreen()));
-                }),
-             
+                ListItem(
+                    icon: Icons.workspace_premium,
+                    title: 'Experience',
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const ExperienceScreen()));
+                    }),
+
+                ListItem(
+                    icon: Icons.rocket_launch,
+                    title: 'Projects',
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const ProjectsScreen()));
+                    }),
               ],
             ),
           ),
