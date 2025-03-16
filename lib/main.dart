@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'business_logic/cubit/cv_cubit.dart';
 import 'data/repository/CVRepository.dart';
 import 'data/webService/CVWebServices.dart';
+import 'presentaion/screen/widget/bouttom_navigation.dart';
 
 void main() {
   final appRouter = AppRouter();
@@ -32,6 +33,7 @@ class MyWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      home: BottomNavigation(),
       onGenerateRoute: appRouter.generateRoute,
     );
   }
