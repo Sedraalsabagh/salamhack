@@ -1,5 +1,6 @@
 import 'package:devloper_app/presentaion/screen/Home.dart';
 import 'package:devloper_app/presentaion/screen/ResumeEvaluator.dart';
+import 'package:devloper_app/presentaion/screen/convertCV.dart';
 
 import 'package:flutter/material.dart';
 
@@ -19,7 +20,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
     HomePage(),
     ProfileScreen(),
     ResumeEvaluatorApp(),
-    Placeholder(),
+    ConvertCvScreen(),
   ];
 
   @override
@@ -62,12 +63,12 @@ class _BottomNavigationState extends State<BottomNavigation> {
                   label: "Create CV",
                 ),
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.person),
-                  label: "Profile",
+                  icon: Icon(Icons.create_new_folder),
+                  label: "ResumeEvaluator",
                 ),
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.settings),
-                  label: "Settings",
+                  icon: Icon(Icons.question_answer),
+                  label: "Getting questions",
                 ),
               ],
             ),
