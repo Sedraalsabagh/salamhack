@@ -146,6 +146,28 @@ class _ResumeEvaluatorAppState extends State<ResumeEvaluatorApp> {
               ),
               const SizedBox(height: 10),
               ElevatedButton(
+                onPressed: pickResumeFile,
+                style: ElevatedButton.styleFrom(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8)),
+                  backgroundColor: Colors.purple,
+                ),
+                child: const Text('Upload Resume',
+                    style: TextStyle(color: Colors.white, fontSize: 16)),
+              ),
+              if (selectedFilePath != null)
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: Text(
+                    'Selected File: ${selectedFilePath!.split('/').last}',
+                    style: const TextStyle(
+                        fontSize: 14, fontWeight: FontWeight.bold),
+                  ),
+                ),
+              const SizedBox(height: 10),
+              ElevatedButton(
                 onPressed: evaluateResume,
                 style: ElevatedButton.styleFrom(
                   padding:

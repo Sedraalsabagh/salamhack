@@ -4,6 +4,7 @@ import 'package:devloper_app/presentaion/screen/widget/welcomeScreen.dart';
 import "package:flutter/material.dart";
 
 import 'presentaion/screen/ResumeEvaluator.dart';
+import 'presentaion/screen/widget/bouttom_navigation.dart';
 
 class AppRouter {
   // late AuthRepository authRepository;
@@ -19,6 +20,10 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (context) => const Welcomescreen(),
           
+        );
+      case '/home':
+        return MaterialPageRoute(
+          builder: (context) => const BottomNavigation(),
         );
 
       default:
