@@ -1,9 +1,6 @@
-import 'package:devloper_app/constants/Colors.dart';
-import 'package:devloper_app/presentaion/screen/widget/opportunity_reco.dart';
-
 import 'package:flutter/material.dart';
-
-import 'widget/bouttom_navigation.dart';
+import 'package:devloper_app/presentaion/screen/widget/opportunity_reco.dart';
+import 'questions.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -49,7 +46,6 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
       appBar: AppBar(
         centerTitle: false,
         title: const UserGreeting(username: "SedraAlsabbagh"),
@@ -86,6 +82,26 @@ class _HomePageState extends State<HomePage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                InkWell(
+                  onTap: () {
+                   Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => QuizScreen()),
+                    );
+                  },
+                  child: const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 8.0),
+                    child: Text(
+                      "Do you have questions about your job?",
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.blue,
+                    
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 14),
                 const Text(
                   "Job Opportunities",
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),

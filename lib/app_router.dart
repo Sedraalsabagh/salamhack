@@ -18,6 +18,7 @@ class AppRouter {
       case '/':
         return MaterialPageRoute(
           builder: (context) => const Welcomescreen(),
+          
         );
 
       default:
