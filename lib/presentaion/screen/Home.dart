@@ -103,7 +103,7 @@ class _HomePageState extends State<HomePage> {
                 ),
                 const SizedBox(height: 14),
                 const Text(
-                  "Job Opportunities",
+                  "Job Opportunities ",
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 10),

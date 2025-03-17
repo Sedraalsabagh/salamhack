@@ -62,8 +62,9 @@ class _QuizScreenState extends State<QuizScreen> {
       Navigator.pop(context);
     },
   ),
+
   title: const Text(
-    'Quiz Generator',
+    'Quiz Generator ',
     style: TextStyle(
         color: Colors.white, fontSize: 19, fontWeight: FontWeight.w300),
   ),
