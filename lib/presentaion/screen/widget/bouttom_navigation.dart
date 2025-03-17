@@ -1,6 +1,7 @@
 import 'package:devloper_app/presentaion/screen/Home.dart';
 import 'package:devloper_app/presentaion/screen/ResumeEvaluator.dart';
 import 'package:devloper_app/presentaion/screen/convertCV.dart';
+import 'package:devloper_app/presentaion/screen/quiz_screen.dart';
 
 import 'package:flutter/material.dart';
 
@@ -21,6 +22,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
     ProfileScreen(),
     ResumeEvaluatorApp(),
     ConvertCvScreen(),
+    QuizScreen()
   ];
 
   @override
@@ -70,6 +72,8 @@ class _BottomNavigationState extends State<BottomNavigation> {
                   icon: Icon(Icons.autorenew), // Convert CV
                   label: "Convert CV",
                 ),
+                BottomNavigationBarItem(icon: Icon(Icons.question_answer_outlined),
+                label: "Quiz")
               ],
             ),
           ),
