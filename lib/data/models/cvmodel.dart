@@ -64,8 +64,6 @@ class CVModel {
   }
 }
 
-// باقي الكلاسات مع الحقول غير المطلوبة:
-
 class Skill {
   final String? skill;
   final String? level;

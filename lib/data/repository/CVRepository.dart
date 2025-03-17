@@ -6,11 +6,9 @@ class CVRepository {
 
   CVRepository({required this.cvWebServices});
 
-  Future<Map<String, dynamic>> createCV(CVModel cvModel) async {
-    try {
-      return await cvWebServices.createCV(cvModel);
-    } catch (e) {
-      throw Exception("Error: $e");
-    }
+  Future<Map<String, dynamic>> createCV(CVModel cvModel) {
+    return cvWebServices.createCV(cvModel);
+
+    /// الاحسن معالجة الاخظاء تكون بالويب سيرفر
   }
 }

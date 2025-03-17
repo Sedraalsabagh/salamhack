@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'profile_screen.dart';
 import 'widget/education_form.dart';
 
 class EducationScreen extends StatefulWidget {
@@ -30,9 +31,8 @@ class _EducationScreenState extends State<EducationScreen> {
 
   void _addEducationForm() {
     setState(() {
-      _educationControllers.add([
-        for (var i = 0; i < 5; i++) TextEditingController()
-      ]);
+      _educationControllers
+          .add([for (var i = 0; i < 5; i++) TextEditingController()]);
       counter++;
     });
   }
@@ -40,10 +40,18 @@ class _EducationScreenState extends State<EducationScreen> {
   void _removeEducationForm(int index) {
     if (_educationControllers.length > 1) {
       setState(() {
-        _educationControllers[index].forEach((controller) => controller.dispose());
+        _educationControllers[index]
+            .forEach((controller) => controller.dispose());
         _educationControllers.removeAt(index);
       });
     }
+  }
+
+  void _saveEducationDetails() {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => ProfileScreen()),
+    );
   }
 
   @override
@@ -51,7 +59,10 @@ class _EducationScreenState extends State<EducationScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Education",
-            style: TextStyle(color: Colors.white, fontSize: 19, fontWeight: FontWeight.w300)),
+            style: TextStyle(
+                color: Colors.white,
+                fontSize: 19,
+                fontWeight: FontWeight.w300)),
         centerTitle: true,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white),
@@ -91,26 +102,24 @@ class _EducationScreenState extends State<EducationScreen> {
                   onPressed: _addEducationForm,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.deepPurpleAccent,
-                    padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 24, vertical: 12),
                   ),
                   icon: const Icon(Icons.add, color: Colors.white),
-                  label: const Text("Add", style: TextStyle(color: Colors.white, fontSize: 16)),
+                  label: const Text("Add",
+                      style: TextStyle(color: Colors.white, fontSize: 16)),
                 ),
                 const SizedBox(width: 20),
                 ElevatedButton.icon(
-                  onPressed: () {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                          content: Text("Education data saved successfully!"),
-                          backgroundColor: Colors.purple),
-                    );
-                  },
+                  onPressed: _saveEducationDetails,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.purple,
-                    padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 24, vertical: 12),
                   ),
                   icon: const Icon(Icons.save, color: Colors.white),
-                  label: const Text("Save", style: TextStyle(color: Colors.white, fontSize: 16)),
+                  label: const Text("Save",
+                      style: TextStyle(color: Colors.white, fontSize: 16)),
                 ),
               ],
             ),
