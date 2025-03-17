@@ -108,7 +108,7 @@ class _HomePageState extends State<HomePage> {
                 ),
                 const SizedBox(height: 10),
                 Column(
-                  children: jobs.map((job) {
+                  children:  jobs.map((job) {
                     return JobCard(
                       title: job["title"]!,
                       date: job["date"]!,

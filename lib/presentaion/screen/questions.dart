@@ -25,7 +25,7 @@ class _QuizScreenState extends State<QuizScreen> {
         },
         
         {
-          "question": " What is monkey patching in Python?",
+          " question": " What is monkey patching in Python?",
           "options": ["A debugging technique used in Python",
            "A way to handle exceptions in Python", "A process of dynamically modifying a class or module at runtime"],
           "correctIndex": 2,
