@@ -1,6 +1,5 @@
-import 'package:devloper_app/constants/String.dart';
+import 'package:devloper_app/constants/String.dart'; // تأكد من كتابة string.dart بحروف صغيرة
 import 'package:dio/dio.dart';
-
 import '../models/cvmodel.dart';
 
 class CVWebServices {
@@ -26,10 +25,18 @@ class CVWebServices {
           },
         ),
       );
+
+      print("Response Data: ${response.data}");
       return response.data;
+    } on DioError catch (dioError) {
+      print("DioError: ${dioError.message}");
+      if (dioError.response != null) {
+        print("Response Error Data: ${dioError.response?.data}");
+      }
+      throw Exception('Failed to create CV: ${dioError.message}');
     } catch (e) {
-      print("Error: $e");
-      throw Exception('Error creating CV');
+      print("Unexpected Error: $e");
+      throw Exception('Unexpected error occurred');
     }
   }
 }
