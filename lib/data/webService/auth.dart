@@ -1,53 +1,48 @@
-import 'package:devloper_app/data/models/auth.dart';
 import 'package:dio/dio.dart';
-import '../../constants/String.dart';
+
+import '../models/auth.dart';
 
 class AuthWebServices {
-  late Dio dio;
+  final Dio dio;
 
-  AuthWebServices() {
-    BaseOptions options = BaseOptions(
-      baseUrl: baseUrl,
-      receiveDataWhenStatusError: true, // بالفيديو حطها منشان تصليح الاغلاط
-      connectTimeout: Duration(seconds: 60), // وقت الاتصال
-      receiveTimeout: Duration(seconds: 60), // وقت الاستجابة
-    );
-    dio = Dio(options);
-  }
+  AuthWebServices()
+      : dio = Dio(BaseOptions(
+          baseUrl: 'https://forsatech.onrender.com/',
+          receiveDataWhenStatusError: true,
+          connectTimeout: Duration(seconds: 60),
+          receiveTimeout: Duration(seconds: 60),
+        ));
 
-  // الفانكشن الاول من شان تسجيل حساب
-  Future<Map<String, dynamic>> signUp(AuthModel authModel) async {
-    try {
-      Response response = await dio.post("signUp/",
-          data: authModel.toJson(),
-          options: Options(
-            headers: {
-              "Content-Type": "application/json",
-              "Accept": "application/json",
-            },
-          ));
-
-      return response.data;
-    } catch (e) {
-      print(" $e");
-      throw Exception("error");
-    }
-  }
-
-  Future<Map<String, dynamic>> login(String email, String password) async {
+  Future<LoginResponse> login(LoginRequest request) async {
     try {
       Response response = await dio.post(
-        "/login",
-        data: {
-          "email": email,
-          "password": password,
-        },
+        'auth/login/',
+        data: request.toJson(),
+        options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+          },
+        ),
       );
 
-      return response.data;
+      print("Response Data: ${response.data}");
+      print("Status Code: ${response.statusCode}");
+
+      if (response.statusCode == 200) {
+        return LoginResponse.fromJson(response.data);
+      } else {
+        throw Exception('Failed to login: ${response.statusCode}');
+      }
+    } on DioError catch (dioError) {
+      print("DioError: ${dioError.message}");
+      if (dioError.response != null) {
+        print("Response Error Data: ${dioError.response?.data}");
+      }
+      throw Exception('Failed to login: ${dioError.message}');
     } catch (e) {
-      print(" $e");
-      throw Exception("error");
+      print("Unexpected Error: $e");
+      throw Exception('Unexpected error occurred');
     }
   }
 }

@@ -16,7 +16,7 @@ class CVWebServices {
   Future<Map<String, dynamic>> createCV(CVModel cvModel) async {
     try {
       Response response = await dio.post(
-        '/createCV',
+        '/resume/generate-resume/',
         data: cvModel.toJson(),
         options: Options(
           headers: {

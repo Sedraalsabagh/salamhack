@@ -1,33 +1,30 @@
-class AuthModel {
+class LoginRequest {
   final String email;
   final String password;
-  final String? username;
-  final String? confirmPassword;
 
-  AuthModel({
-    required this.email,
-    required this.password,
-    this.username,
-    this.confirmPassword,
-  });
+  LoginRequest({required this.email, required this.password});
 
-
-  // هي تأكيدي منها مابعرف اذا صح من ارسال الى السيرفر لازم تعمل جيسون
   Map<String, dynamic> toJson() {
     return {
-      "email": email,
-      "password": password,
-      "username": username,
-      "confirmPassword": confirmPassword,
+      'email': email,
+      'password': password,
     };
   }
- //                        هي الباك عم يرجعلك وكمان انت بدك تحويلي لجيسون
-  factory AuthModel.fromJson(Map<String, dynamic> json) {
-    return AuthModel(
-      email: json["email"],
-      password: json["password"],
-      username: json["username"],
-      confirmPassword: json["confirmPassword"],
+}
+
+class LoginResponse {
+  final String accessToken;
+  final String refreshToken;
+
+  LoginResponse({
+    required this.accessToken,
+    required this.refreshToken,
+  });
+
+  factory LoginResponse.fromJson(Map<String, dynamic> json) {
+    return LoginResponse(
+      accessToken: json['access_token'],
+      refreshToken: json['refresh_token'],
     );
   }
 }

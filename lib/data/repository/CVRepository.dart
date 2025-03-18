@@ -9,6 +9,6 @@ class CVRepository {
   Future<Map<String, dynamic>> createCV(CVModel cvModel) {
     return cvWebServices.createCV(cvModel);
 
-    /// الاحسن معالجة الاخظاء تكون بالويب سيرفر
+    // الاحسن معالجة الاخظاء تكون بالويب سيرفر
   }
 }

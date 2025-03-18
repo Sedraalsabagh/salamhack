@@ -49,13 +49,12 @@ class _SkillsScreenState extends State<SkillsScreen> {
   void saveSkills() {
     final cvCubit = context.read<CvCubit>();
 
+    // ignore: unused_local_variable
     final skills = _skillControllers.map((controllers) {
       final name = controllers[0].text;
       final level = controllers[1].text;
       return Skill(skill: name, level: level);
     }).toList();
-
-    cvCubit.addSkills(skills);
 
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
