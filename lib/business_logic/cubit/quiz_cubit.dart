@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
-import '../../data/models/question.dart';
-import '../../data/repository/questions.dart';
+import 'package:devloper_app/data/models/quiz.dart';
+import 'package:devloper_app/data/repository/quiz.dart';
+
 
 abstract class QuizState {}
 
@@ -32,44 +33,71 @@ class QuizCubit extends Cubit<QuizState> {
 
   QuizCubit({required this.questionsRepository}) : super(QuizInitial());
 
-  Future<void> fetchQuiz() async {
+  Future<void> fetchQuiz({
+    required String title,
+    required String requiredSkill,
+    required String description,
+  }) async {
     emit(QuizLoading());
     try {
-      // Construct the request body as required by the backend.
+      // بناء جسم الطلب باستخدام الحقول الثلاثة المدخلة من قبل المستخدم.
       final Map<String, dynamic> requestBody = {
-        "job_field": "Flutter developer",
-      };
+  "title": title,
+  "required_skills": requiredSkill,
+  "description": description,
+};
 
       final questions = await questionsRepository.fetchQuestions(requestBody);
       emit(QuizLoaded(questions: questions));
     } catch (e) {
-      emit(QuizError(message: e.toString()));
+      emit(QuizError(message: "Failed to fetch quiz: ${e.toString()}"));
     }
   }
-  void selectAnswer(int answerIndex) {
-    final currentState = state;
-    if (currentState is QuizLoaded) {
-      final updatedAnswers = List<int>.from(currentState.userAnswers)
-        ..add(answerIndex);
-      final nextIndex = currentState.currentQuestionIndex + 1;
 
-      if (nextIndex < currentState.questions.length) {
-        emit(QuizLoaded(
-          questions: currentState.questions,
-          currentQuestionIndex: nextIndex,
-          userAnswers: updatedAnswers,
-        ));
-      } else {
-        // All questions answered. You can choose to either
-        // show a final result screen or remain in this state
-        // while including additional calculated info.
-        // For now, we re-emit the same loaded state.
-        emit(QuizLoaded(
-          questions: currentState.questions,
-          currentQuestionIndex: currentState.currentQuestionIndex,
-          userAnswers: updatedAnswers,
-        ));
-      }
+  // void selectAnswer(int answerIndex) {
+  //   final currentState = state;
+  //   if (currentState is QuizLoaded) {
+  //     final updatedAnswers = List<int>.from(currentState.userAnswers)
+  //       ..add(answerIndex);
+  //     final nextIndex = currentState.currentQuestionIndex + 1;
+
+  //     if (nextIndex < currentState.questions.length) {
+  //       emit(QuizLoaded(
+  //         questions: currentState.questions,
+  //         currentQuestionIndex: nextIndex,
+  //         userAnswers: updatedAnswers,
+  //       ));
+  //     } else {
+  //       // يمكن هنا عرض نتيجة الاختبار أو إعادة عرض السؤال الأخير مع تحديث الإجابات.
+  //       emit(QuizLoaded(
+  //         questions: currentState.questions,
+  //         currentQuestionIndex: currentState.currentQuestionIndex,
+  //         userAnswers: updatedAnswers,
+  //       ));
+  //     }
+  //   }
+  // }
+  void selectAnswerForQuestion(int questionIndex, int answerIndex) {
+  final currentState = state;
+  if (currentState is QuizLoaded) {
+    // انسخ الـ userAnswers الحالية
+    final updatedAnswers = List<int>.from(currentState.userAnswers);
+
+    // إذا كانت قائمة الإجابات أقصر من عدد الأسئلة، أكملها بـ -1
+    while (updatedAnswers.length < currentState.questions.length) {
+      updatedAnswers.add(-1);
     }
+
+    // حدِّث إجابة السؤال المحدد
+    updatedAnswers[questionIndex] = answerIndex;
+
+    // أعد إصدار الحالة مع التحديث الجديد
+    emit(QuizLoaded(
+      questions: currentState.questions,
+      currentQuestionIndex: currentState.currentQuestionIndex,
+      userAnswers: updatedAnswers,
+    ));
   }
+}
+
 }

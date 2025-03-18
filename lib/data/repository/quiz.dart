@@ -1,5 +1,5 @@
-import '../models/question.dart';
-import '../webService/questionsServices.dart';
+import 'package:devloper_app/data/models/quiz.dart';
+import 'package:devloper_app/data/webService/quizWebServices.dart';
 
 class QuestionsRepository {
   final QuestionsWebServices questionsWebServices;
