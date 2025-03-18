@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart'; // ة
 import '../../business_logic/cubit/cv_cubit.dart';
 import '../../data/repository/CVRepository.dart';
+import '../../data/webService/CVWebServices.dart';
 import 'course_screen.dart';
 import 'education_screen.dart';
 import 'experience_screen.dart';
@@ -40,7 +41,7 @@ class ProfileScreen extends StatelessWidget {
         ),
       ),
       body: BlocProvider(
-        create: (_) => CvCubit(CVRepository()),
+        create: (_) => CvCubit(CVRepository(cvWebServices: CVWebServices())),
         child: BlocConsumer<CvCubit, CvState>(
           listener: (context, state) {
             if (state is CVSuccess) {
