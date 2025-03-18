@@ -18,11 +18,6 @@ class AppRouter {
           builder: (context) => const LogIn(),
         );
 
-      case '/home':
-        return MaterialPageRoute(
-          builder: (context) => const BottomNavigation(),
-        );
-
       default:
         return null;
     }

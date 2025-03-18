@@ -1,5 +1,6 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:devloper_app/presentaion/screen/Home.dart';
+import 'package:devloper_app/presentaion/screen/widget/bouttom_navigation.dart';
 import 'package:devloper_app/presentaion/screen/widget/custom_botton.dart';
 
 import 'package:flutter/cupertino.dart';
@@ -152,7 +153,7 @@ class _LogInState extends State<LogIn> {
                         String password = passwordController.text.trim();
                         context.read<AuthCubit>().login(email, password);
                       },
-                      text: state is AuthLoading ? "Loading..." : "Log in",
+                      text: state is AuthLoading ? "Log in " : "Log in",
                     ),
                   ),
                   const SizedBox(height: 24),
@@ -238,7 +239,7 @@ class _LogInState extends State<LogIn> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => HomePage()),
+                                    builder: (context) => BottomNavigation()),
                               );
                             },
                             child: const Text(

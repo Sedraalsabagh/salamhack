@@ -35,7 +35,6 @@ class MyWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      // home: BottomNavigation(),
       onGenerateRoute: appRouter.generateRoute,
       initialRoute: '/',
     );
