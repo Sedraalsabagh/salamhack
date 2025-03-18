@@ -37,6 +37,7 @@ class MyWidget extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       // home: BottomNavigation(),
       onGenerateRoute: appRouter.generateRoute,
+      initialRoute: '/',
     );
   }
 }

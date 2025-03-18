@@ -1,9 +1,10 @@
 import 'package:devloper_app/constants/Colors.dart';
 import 'package:devloper_app/presentaion/screen/Home.dart';
+import 'package:devloper_app/presentaion/screen/logIn.dart';
 
 import 'package:flutter/material.dart';
-import '../../../Animation/Fadeanimation.dart';
-import 'custom_botton.dart';
+import '../../Animation/Fadeanimation.dart';
+import 'widget/custom_botton.dart';
 
 class Welcomescreen extends StatefulWidget {
   const Welcomescreen({super.key});
@@ -80,7 +81,7 @@ class _MyWidgetState extends State<Welcomescreen> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => HomePage()),
+                      MaterialPageRoute(builder: (context) => LogIn()),
                     );
                   },
                   text: "Get started",
