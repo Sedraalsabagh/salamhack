@@ -1,6 +1,6 @@
+import 'package:devloper_app/presentaion/screen/quiz_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:devloper_app/presentaion/screen/widget/opportunity_reco.dart';
-import 'questions.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
