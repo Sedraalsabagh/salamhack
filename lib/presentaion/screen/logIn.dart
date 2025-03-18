@@ -20,7 +20,7 @@ class LogIn extends StatefulWidget {
 class _LogInState extends State<LogIn> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>(); // تم إضافته هنا
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   bool rememberMe = true;
 
@@ -38,7 +38,7 @@ class _LogInState extends State<LogIn> {
 
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (_) => HomePage()),
+            MaterialPageRoute(builder: (_) => BottomNavigation()), //
           );
         } else if (state is AuthFailure) {
           print("Login Failed - Error:");
