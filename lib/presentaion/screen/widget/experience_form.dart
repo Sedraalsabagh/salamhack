@@ -35,7 +35,10 @@ class ExperienceForm extends StatelessWidget {
                   children: [
                     Text(
                       'Experience ${index + 1}', // يعرض رقم البطاقة
-                      style: const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w600),
+                      style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600),
                     ),
                     IconButton(
                       icon: const Icon(Icons.delete, color: Colors.white),
@@ -48,11 +51,16 @@ class ExperienceForm extends StatelessWidget {
                 padding: const EdgeInsets.only(right: 6, left: 6, top: 12),
                 child: Column(
                   children: [
-                    _buildCustomField(context, 'Job Title', Icons.work_rounded, controllers[0]),
-                    _buildCustomField(context, 'Company', Icons.business, controllers[1]),
-                    _buildCustomField(context, 'Start Date', Icons.calendar_month, controllers[2]),
-                    _buildCustomField(context, 'End Date', Icons.edit_calendar_outlined, controllers[3]),
-                    _buildCustomField(context, 'Description', Icons.description, controllers[4]),
+                    _buildCustomField(context, 'Job Title', Icons.work_rounded,
+                        controllers[0]),
+                    _buildCustomField(
+                        context, 'Company', Icons.business, controllers[1]),
+                    _buildCustomField(context, 'Start Date',
+                        Icons.calendar_month, controllers[2]),
+                    _buildCustomField(context, 'End Date',
+                        Icons.edit_calendar_outlined, controllers[3]),
+                    _buildCustomField(context, 'Description', Icons.description,
+                        controllers[4]),
                   ],
                 ),
               ),
@@ -63,7 +71,8 @@ class ExperienceForm extends StatelessWidget {
     );
   }
 
-  Widget _buildCustomField(BuildContext context, String hint, IconData icon, TextEditingController controller) {
+  Widget _buildCustomField(BuildContext context, String hint, IconData icon,
+      TextEditingController controller) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 12.0),
       child: FadeInDown(

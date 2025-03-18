@@ -35,7 +35,7 @@ class EducationForm extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Education ${index + 1}', // يعرض رقم البطاقة
+                      'Education ${index + 1}', //
                       style: const TextStyle(
                           color: Colors.white,
                           fontSize: 16,
@@ -43,7 +43,7 @@ class EducationForm extends StatelessWidget {
                     ),
                     IconButton(
                       icon: const Icon(Icons.delete, color: Colors.white),
-                      onPressed: onRemove, // عند الضغط يتم حذف البطاقة
+                      onPressed: onRemove, //
                     ),
                   ],
                 ),

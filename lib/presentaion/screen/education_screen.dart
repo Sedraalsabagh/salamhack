@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'widget/custom_field.dart'; // تأكد من أنك أضفت CustomField هنا
 import 'profile_screen.dart';
-import 'widget/education_form.dart';
 
 class EducationScreen extends StatefulWidget {
   const EducationScreen({super.key});
@@ -11,7 +11,6 @@ class EducationScreen extends StatefulWidget {
 
 class _EducationScreenState extends State<EducationScreen> {
   final List<List<TextEditingController>> _educationControllers = [];
-  int counter = 1;
 
   @override
   void initState() {
@@ -31,9 +30,13 @@ class _EducationScreenState extends State<EducationScreen> {
 
   void _addEducationForm() {
     setState(() {
-      _educationControllers
-          .add([for (var i = 0; i < 5; i++) TextEditingController()]);
-      counter++;
+      _educationControllers.add([
+        TextEditingController(), // University Name
+        TextEditingController(), // Degree
+        TextEditingController(), // Field of Study
+        TextEditingController(), // Start Year
+        TextEditingController(), // End Year
+      ]);
     });
   }
 
@@ -50,7 +53,7 @@ class _EducationScreenState extends State<EducationScreen> {
   void _saveEducationDetails() {
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (context) => ProfileScreen()),
+      MaterialPageRoute(builder: (context) => const ProfileScreen()),
     );
   }
 
@@ -58,11 +61,11 @@ class _EducationScreenState extends State<EducationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Education",
-            style: TextStyle(
-                color: Colors.white,
-                fontSize: 19,
-                fontWeight: FontWeight.w300)),
+        title: const Text(
+          "Education",
+          style: TextStyle(
+              color: Colors.white, fontSize: 19, fontWeight: FontWeight.w300),
+        ),
         centerTitle: true,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white),
@@ -84,11 +87,82 @@ class _EducationScreenState extends State<EducationScreen> {
             child: ListView.builder(
               itemCount: _educationControllers.length,
               itemBuilder: (context, index) {
-                return EducationForm(
+                return Padding(
                   key: ValueKey(index),
-                  index: index,
-                  controllers: _educationControllers[index],
-                  onRemove: () => _removeEducationForm(index),
+                  padding: const EdgeInsets.all(12.0),
+                  child: Column(
+                    children: [
+                      CustomField(
+                        controller: _educationControllers[index][0],
+                        icon: Icons.school,
+                        hint: "University Name",
+                        gradientColors: const [
+                          Color(0xFF5B2DF0),
+                          Color(0xFF8D148D)
+                        ],
+                        validator: (value) =>
+                            value == null || value.isEmpty ? 'Required' : null,
+                      ),
+                      const SizedBox(height: 10),
+                      CustomField(
+                        controller: _educationControllers[index][1],
+                        icon: Icons.book,
+                        hint: "Degree",
+                        gradientColors: const [
+                          Color(0xFF5B2DF0),
+                          Color(0xFF8D148D)
+                        ],
+                        validator: (value) =>
+                            value == null || value.isEmpty ? 'Required' : null,
+                      ),
+                      const SizedBox(height: 10),
+                      CustomField(
+                        controller: _educationControllers[index][2],
+                        icon: Icons.work,
+                        hint: "Field of Study",
+                        gradientColors: const [
+                          Color(0xFF5B2DF0),
+                          Color(0xFF8D148D)
+                        ],
+                        validator: (value) =>
+                            value == null || value.isEmpty ? 'Required' : null,
+                      ),
+                      const SizedBox(height: 10),
+                      CustomField(
+                        controller: _educationControllers[index][3],
+                        icon: Icons.date_range,
+                        hint: "Start Year",
+                        gradientColors: const [
+                          Color(0xFF5B2DF0),
+                          Color(0xFF8D148D)
+                        ],
+                        validator: (value) =>
+                            value == null || value.isEmpty ? 'Required' : null,
+                      ),
+                      const SizedBox(height: 10),
+                      CustomField(
+                        controller: _educationControllers[index][4],
+                        icon: Icons.date_range,
+                        hint: "End Year",
+                        gradientColors: const [
+                          Color(0xFF5B2DF0),
+                          Color(0xFF8D148D)
+                        ],
+                        validator: (value) =>
+                            value == null || value.isEmpty ? 'Required' : null,
+                      ),
+                      const SizedBox(height: 10),
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: IconButton(
+                          onPressed: () => _removeEducationForm(index),
+                          icon: const Icon(Icons.remove_circle,
+                              color: Colors.redAccent),
+                        ),
+                      ),
+                      const Divider(thickness: 1.5),
+                    ],
+                  ),
                 );
               },
             ),

@@ -1,9 +1,6 @@
-import 'package:devloper_app/presentaion/screen/Home.dart';
-import 'package:devloper_app/presentaion/screen/profile_screen.dart';
 import 'package:devloper_app/presentaion/screen/widget/welcomeScreen.dart';
 import "package:flutter/material.dart";
-
-import 'presentaion/screen/ResumeEvaluator.dart';
+import 'presentaion/screen/cv_screen.dart';
 import 'presentaion/screen/widget/bouttom_navigation.dart';
 
 class AppRouter {
@@ -18,12 +15,12 @@ class AppRouter {
     switch (settings.name) {
       case '/':
         return MaterialPageRoute(
-          builder: (context) => const Welcomescreen(),
+          builder: (context) => const CvScreen(),
         );
-      case '/home':
-        return MaterialPageRoute(
-          builder: (context) => const BottomNavigation(),
-        );
+      // case '/home':
+      //   return MaterialPageRoute(
+      //     builder: (context) => const BottomNavigation(),
+      //   );
 
       default:
         return null;
