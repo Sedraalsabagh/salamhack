@@ -1,6 +1,12 @@
-import 'package:flutter/material.dart';
+import 'dart:typed_data';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:file_picker/file_picker.dart';
-import 'dart:convert';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'package:devloper_app/business_logic/cubit/evaluations_cubit.dart';
+import 'package:devloper_app/business_logic/cubit/evaluations_state.dart';
+import 'package:devloper_app/data/models/evaluation.dart';
 
 class ResumeEvaluatorApp extends StatefulWidget {
   const ResumeEvaluatorApp({super.key});
@@ -10,51 +16,60 @@ class ResumeEvaluatorApp extends StatefulWidget {
 }
 
 class _ResumeEvaluatorAppState extends State<ResumeEvaluatorApp> {
-  final TextEditingController _jobDescriptionController =
-      TextEditingController();
-  Map<String, dynamic>? evaluationResult;
-  String? selectedFilePath;
+  final TextEditingController _jobDescriptionController = TextEditingController();
 
-  void evaluateResume() {
-    String jobDescription = _jobDescriptionController.text;
-    if (jobDescription.isEmpty || selectedFilePath == null) return;
-
-    // Simulated API response
-    String jsonResponse =
-        '{"match_percentage": 0.1, "missing_keywords": ["Python", "Django", "Flask"], "improvement_tips": "The resume lacks mention of Python, which is explicitly required in the job description."}';
-
-    setState(() {
-      evaluationResult = json.decode(jsonResponse);
-    });
-  }
+  // متغيرات للتفريق بين الويب والمنصات الأخرى
+  String? selectedFilePath; 
+  Uint8List? selectedFileBytes; 
+  String? selectedFileName;      
 
   Future<void> pickResumeFile() async {
     try {
       FilePickerResult? result = await FilePicker.platform.pickFiles(
         type: FileType.any,
-        allowMultiple: false, // يسمح باختيار ملف واحد فقط
+        allowMultiple: false,
       );
 
       if (result != null) {
-        setState(() {
-          selectedFilePath = result.files.single.path!;
-        });
-        print("تم اختيار الملف: $selectedFilePath");
+        if (kIsWeb) {
+          // في الويب لا يوجد مسار فعلي للملف، لذلك نستخدم البايتات
+          selectedFileBytes = result.files.single.bytes;
+          selectedFileName = result.files.single.name;
+          setState(() {});
+          debugPrint('File (web) chosen: $selectedFileName');
+        } else {
+          // في المنصات الأخرى يمكننا الحصول على المسار
+          selectedFilePath = result.files.single.path;
+          setState(() {});
+          debugPrint('File (mobile/desktop) chosen: $selectedFilePath');
+        }
       } else {
-        print("لم يتم اختيار أي ملف.");
+        debugPrint('لم يتم اختيار أي ملف.');
       }
     } catch (e) {
-      print("خطأ أثناء اختيار الملف: $e");
+      debugPrint('خطأ أثناء اختيار الملف: $e');
     }
+  }
+
+  void evaluateResume() {
+    final jobDescription = _jobDescriptionController.text;
+    if (jobDescription.isEmpty) return;
+
+ 
+    context.read<ResumeCubit>().evaluateResume(
+      jobDescription: jobDescription,
+      filePath: selectedFilePath,
+      fileBytes: selectedFileBytes,
+      fileName: selectedFileName,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Directionality(
-      textDirection: TextDirection.ltr,
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Resume Evaluator'),
+    return Scaffold(
+      appBar: AppBar(
+          
+          centerTitle: true, title: const Text('Resume Evaluator',style: TextStyle(color: Colors.white),),
           flexibleSpace: Container(
             decoration: const BoxDecoration(
               gradient: LinearGradient(
@@ -64,91 +79,111 @@ class _ResumeEvaluatorAppState extends State<ResumeEvaluatorApp> {
               ),
             ),
           ),
-        ),
-        body: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              TextField(
-                controller: _jobDescriptionController,
-                decoration: const InputDecoration(
-                  labelText: 'Enter Job Description',
-                  border: OutlineInputBorder(),
-                ),
-                maxLines: 3,
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            Card(
+              elevation: 3,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16)),
+              child: Container(
+                padding: const EdgeInsets.all(24),
+                width: double.infinity,
+                child: Column(children: [
+                  const Text("In order to be able to evaluate your CV, you must upload it", style: TextStyle(
+                    fontSize: 17,fontWeight: FontWeight.w500
+                  ),), const SizedBox(height: 25),
+        
+            TextButton.icon(onPressed:pickResumeFile,label:const Text('Upload Resume', style: TextStyle(fontWeight: FontWeight.w500,color: Colors.purple, fontSize: 16,decoration:TextDecoration.underline),),icon: Icon(Icons.upload_file,size: 22,color:Colors.purple,),
+            
+              )],),
               ),
-              const SizedBox(height: 10),
-              ElevatedButton(
-                onPressed: pickResumeFile,
-                style: ElevatedButton.styleFrom(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8)),
-                  backgroundColor: Colors.purple,
-                ),
-                child: const Text('Upload Resume',
-                    style: TextStyle(color: Colors.white, fontSize: 16)),
               ),
-              if (selectedFilePath != null)
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8.0),
-                  child: Text(
-                    'Selected File: ${selectedFilePath!.split('/').last}',
-                    style: const TextStyle(
-                        fontSize: 14, fontWeight: FontWeight.bold),
-                  ),
-                ),
-              const SizedBox(height: 10),
-              ElevatedButton(
-                onPressed: evaluateResume,
-                style: ElevatedButton.styleFrom(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8)),
-                  backgroundColor: const Color(0xFF4A15F4),
-                ),
-                child: const Text('Evaluate Resume',
-                    style: TextStyle(color: Colors.white, fontSize: 16)),
+              if (kIsWeb && selectedFileName != null)
+              Text('Selected File (Web): $selectedFileName'),
+            if (!kIsWeb && selectedFilePath != null)
+              Text('Selected File (Mobile/Desktop): $selectedFilePath'),
+        
+              const SizedBox(height: 25),
+            TextField(
+              controller: _jobDescriptionController,
+              decoration: const InputDecoration(
+                labelText: 'Enter Job Description',
+                labelStyle: TextStyle(fontSize: 17,fontWeight: FontWeight.w500,color: Colors.grey),
+                prefixIcon: Icon(Icons.work_rounded,color: Color(0xFF4A15F4),),
+              
+                border: OutlineInputBorder(),
               ),
-              const SizedBox(height: 20),
-              evaluationResult != null
-                  ? Expanded(child: _buildResult())
-                  : Container(),
-            ],
-          ),
+             
+            ),
+            const SizedBox(height: 10),
+          
+            
+            const SizedBox(height: 13),
+            ElevatedButton(
+              onPressed: evaluateResume,
+              style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                  backgroundColor:Color(0xFF4A15F4),
+                ),
+                child: const Text('Evaluate Resume', style: TextStyle(color: Colors.white, fontSize: 16)),
+              ),
+            
+            const SizedBox(height: 20),
+            Expanded(
+              child: BlocBuilder<ResumeCubit, ResumeState>(
+                builder: (context, state) {
+                  if (state is ResumeLoading) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else if (state is ResumeLoaded) {
+                    return _buildResult(state.result);
+                  } else if (state is ResumeError) {
+                    return Center(
+                      child: Text(
+                        state.message,
+                        style: const TextStyle(color: Colors.red),
+                      ),
+                    );
+                  }
+                  return Container();
+                },
+              ),
+            ),
+          ],
         ),
       ),
     );
   }
 
-  Widget _buildResult() {
+  Widget _buildResult(ResumeEvaluationResult result) {
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-              'Match Percentage: ${evaluationResult!["match_percentage"] * 100}%',
-              style:
-                  const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+          Text('Match Percentage: ${result.matchPercentage * 100}%'),
           const SizedBox(height: 10),
-          const Text('Missing Keywords:',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+          const Text('Missing Keywords:'),
           Wrap(
-            children:
-                evaluationResult!["missing_keywords"].map<Widget>((keyword) {
-              return Chip(label: Text(keyword));
-            }).toList(),
+            spacing: 6.0,
+            children: result.missingKeywords
+                .map((keyword) => Chip(label: Text(keyword)))
+                .toList(),
           ),
           const SizedBox(height: 10),
-          const Text('Improvement Tips:',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-          Text(evaluationResult!["improvement_tips"],
-              style: const TextStyle(fontSize: 14)),
+          const Text('Improvement Tips:'),
+          Text(result.improvementTips),
         ],
       ),
     );
   }
 }
+
+
+
+
+
+
+

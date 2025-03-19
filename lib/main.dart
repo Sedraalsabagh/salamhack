@@ -1,4 +1,7 @@
 import 'package:devloper_app/app_router.dart';
+import 'package:devloper_app/business_logic/cubit/evaluations_cubit.dart';
+import 'package:devloper_app/data/repository/evaluation.dart';
+import 'package:devloper_app/data/webService/evaluationWebServices.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'business_logic/cubit/auth_cubit.dart';
@@ -18,6 +21,11 @@ void main() {
         BlocProvider<AuthCubit>(
           create: (context) => AuthCubit(
             AuthRepository(authWebServices: AuthWebServices()),
+          ),
+        ),
+         BlocProvider(
+          create: (context) => ResumeCubit(
+            ResumeRepository(ResumeWebServices()),
           ),
         ),
       ],
