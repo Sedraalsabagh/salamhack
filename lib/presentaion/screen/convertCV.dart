@@ -1,3 +1,4 @@
+import 'package:devloper_app/data/models/convertcvmodel.dart';
 import 'package:devloper_app/presentaion/ResumATS.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -59,12 +60,15 @@ class _ConvertCvScreenState extends State<ConvertCvScreen> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: ElevatedButton(
-                      onPressed: () {
+                      onPressed: () async {
+                        print("\n the resume from the state screen" +
+                            state.resume.toString() +
+                            "\n DONE");
                         Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (_) =>
-                                  AtsResumePdfScreen(resume: resumeModel)),
+                                  AtsResumePdfScreen(resume: state.resume)),
                         );
                       },
                       style: ElevatedButton.styleFrom(

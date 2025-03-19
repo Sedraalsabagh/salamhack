@@ -24,7 +24,7 @@ class ResumeModel {
       personalDetails: json['personal_details'] != null
           ? PersonalDetails.fromJson(json['personal_details'])
           : null,
-      summary: json['summary'],
+      summary: json['summary'] ?? '', // Default empty string if null
       skills: (json['skills'] as List?)
           ?.map((item) => Skill.fromJson(item))
           .toList(),
@@ -64,12 +64,12 @@ class PersonalDetails {
 
   factory PersonalDetails.fromJson(Map<String, dynamic> json) {
     return PersonalDetails(
-      name: json['name'],
-      email: json['email'],
-      phone: json['phone'],
-      location: json['location'],
-      githubLink: json['github_link'],
-      linkedinLink: json['linkedin_link'],
+      name: json['name'] ?? '',
+      email: json['email'] ?? '',
+      phone: json['phone'] ?? '',
+      location: json['location'] ?? '',
+      githubLink: json['github_link'] ?? '',
+      linkedinLink: json['linkedin_link'] ?? '',
     );
   }
 }
@@ -82,8 +82,8 @@ class Skill {
 
   factory Skill.fromJson(Map<String, dynamic> json) {
     return Skill(
-      skill: json['skill'],
-      level: json['level'],
+      skill: json['skill'] ?? '',
+      level: json['level'] ?? '',
     );
   }
 }
@@ -105,11 +105,11 @@ class Education {
 
   factory Education.fromJson(Map<String, dynamic> json) {
     return Education(
-      degree: json['degree'],
-      institution: json['institution'],
-      startDate: json['start_date'],
-      endDate: json['end_date'],
-      description: json['description'],
+      degree: json['degree'] ?? '',
+      institution: json['institution'] ?? '',
+      startDate: json['start_date'] ?? '',
+      endDate: json['end_date'] ?? '',
+      description: json['description'] ?? '',
     );
   }
 }
@@ -123,9 +123,9 @@ class Project {
 
   factory Project.fromJson(Map<String, dynamic> json) {
     return Project(
-      title: json['title'],
-      description: json['description'],
-      githubLink: json['github_link'],
+      title: json['title'] ?? '',
+      description: json['description'] ?? '',
+      githubLink: json['github_link'] ?? '',
     );
   }
 }
@@ -147,11 +147,11 @@ class Experience {
 
   factory Experience.fromJson(Map<String, dynamic> json) {
     return Experience(
-      jobTitle: json['job_title'],
-      company: json['company'],
-      startDate: json['start_date'],
-      endDate: json['end_date'],
-      description: json['description'],
+      jobTitle: json['job_title'] ?? '',
+      company: json['company'] ?? '',
+      startDate: json['start_date'] ?? '',
+      endDate: json['end_date'] ?? '',
+      description: json['description'] ?? '',
     );
   }
 }
@@ -173,11 +173,11 @@ class TrainingCourse {
 
   factory TrainingCourse.fromJson(Map<String, dynamic> json) {
     return TrainingCourse(
-      title: json['title'],
-      institution: json['institution'],
-      startDate: json['start_date'],
-      endDate: json['end_date'],
-      description: json['description'],
+      title: json['title'] ?? '',
+      institution: json['institution'] ?? '',
+      startDate: json['start_date'] ?? '',
+      endDate: json['end_date'] ?? '',
+      description: json['description'] ?? '',
     );
   }
 }

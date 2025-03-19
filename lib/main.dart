@@ -23,11 +23,11 @@ void main() {
             AuthRepository(authWebServices: AuthWebServices()),
           ),
         ),
-         BlocProvider(
-          create: (context) => ResumeCubit(
-            ResumeRepository(ResumeWebServices()),
-          ),
-        ),
+        //  BlocProvider(
+        //   create: (context) => ResumeCubit(
+        //     ResumeRepository(ResumeWebServices()),
+        //   ),
+        // ),
       ],
       child: MyWidget(appRouter: appRouter),
     ),

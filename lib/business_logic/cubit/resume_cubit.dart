@@ -13,6 +13,7 @@ class ResumeCubit extends Cubit<ResumeState> {
     emit(ResumeLoading());
     try {
       final resumeModel = await repository.convertResume(fileBytes, fileName);
+      print("RESUME MODEL: " + resumeModel.education.toString());
       emit(ResumeLoaded(resumeModel));
     } catch (e) {
       emit(ResumeError('Failed to convert resume: $e'));
