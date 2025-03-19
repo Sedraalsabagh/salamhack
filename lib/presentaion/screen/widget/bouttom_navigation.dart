@@ -22,7 +22,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
     ProfileScreen(),
     ResumeEvaluatorApp(),
     ConvertCvScreen(),
-    QuizScreen()
+    QuizScreen(),
   ];
 
   @override
@@ -72,8 +72,8 @@ class _BottomNavigationState extends State<BottomNavigation> {
                   icon: Icon(Icons.autorenew), // Convert CV
                   label: "Convert CV",
                 ),
-                BottomNavigationBarItem(icon: Icon(Icons.question_answer_outlined),
-                label: "Quiz")
+                BottomNavigationBarItem(
+                    icon: Icon(Icons.question_answer_outlined), label: "Quiz")
               ],
             ),
           ),

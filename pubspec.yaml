@@ -48,6 +48,8 @@ dependencies:
   json_serializable: ^6.9.4
   pretty_dio_logger: ^1.4.0
   retrofit: ^4.4.2
+  pdf: ^3.10.4
+  printing: ^5.11.0
 
 dev_dependencies:
   flutter_lints: ^3.0.0

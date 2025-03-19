@@ -16,3 +16,5 @@ class CVFailure extends CvState {
   final String error;
   CVFailure(this.error);
 }
+
+class CVFilling extends CvState {}

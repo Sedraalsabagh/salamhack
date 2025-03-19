@@ -22,14 +22,12 @@ class LoginResponse {
   });
 
   factory LoginResponse.fromJson(Map<String, dynamic> json) {
-    // تحقق من وجود القيم قبل استخدامها
     if (json['access'] == null || json['refresh'] == null) {
       throw Exception('Invalid response data');
     }
     return LoginResponse(
-      accessToken: json['access'] ?? '', // إذا كانت null يتم استخدام قيمة فارغة
-      refreshToken:
-          json['refresh'] ?? '', // إذا كانت null يتم استخدام قيمة فارغة
+      accessToken: json['access'] ?? '',
+      refreshToken: json['refresh'] ?? '',
     );
   }
 }
