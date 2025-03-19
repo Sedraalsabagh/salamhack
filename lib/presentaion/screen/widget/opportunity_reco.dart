@@ -2,15 +2,13 @@ import 'package:flutter/material.dart';
 
 class JobCard extends StatelessWidget {
   final String title;
-  final String date;
-  final String imageUrl;
+  final int date;
   final List<Color> gradientColors;
 
   const JobCard({
     Key? key,
     required this.title,
     required this.date,
-    required this.imageUrl,
     this.gradientColors = const [Color(0xFF6B1A6B), Color(0xFFB83280)],
   }) : super(key: key);
 
@@ -33,11 +31,10 @@ class JobCard extends StatelessWidget {
         contentPadding: const EdgeInsets.all(12),
         leading: ClipRRect(
           borderRadius: BorderRadius.circular(12),
-          child: Image.asset(
-            imageUrl,
-            width: 70,
-            height: 80,
-            fit: BoxFit.cover,
+          child: Container(
+            width: 50,
+            height: 50,
+            color: Colors.grey[300],
           ),
         ),
         title: Text(
@@ -49,7 +46,7 @@ class JobCard extends StatelessWidget {
           ),
         ),
         subtitle: Text(
-          date,
+          date.toString(),
           style: const TextStyle(color: Colors.grey),
         ),
         trailing: ShaderMask(

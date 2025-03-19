@@ -23,7 +23,7 @@ class ResumeWebService {
 
     if (response.statusCode == 201 || response.statusCode == 200) {
       print(response.data);
-      return ResumeModel.fromJson(response.data);
+      return ResumeModel.fromJson(response.data['data']);
     } else {
       throw Exception(
           "Failed to convert resume. Status code: ${response.statusCode}");
