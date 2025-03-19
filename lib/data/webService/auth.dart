@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 
+import '../../presentaion/screen/token_manger.dart';
 import '../models/auth.dart';
 
 class AuthWebServices {
@@ -30,6 +31,7 @@ class AuthWebServices {
       print("Status Code: ${response.statusCode}");
 
       if (response.statusCode == 200) {
+        TokenManager.saveToken(response.data['access']);
         return LoginResponse.fromJson(response.data);
       } else {
         throw Exception('Failed to login: ${response.statusCode}');

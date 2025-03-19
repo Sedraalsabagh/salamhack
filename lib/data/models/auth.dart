@@ -26,8 +26,15 @@ class LoginResponse {
       throw Exception('Invalid response data');
     }
     return LoginResponse(
-      accessToken: json['access'] ?? '',
-      refreshToken: json['refresh'] ?? '',
+      accessToken: json['access'],
+      refreshToken: json['refresh'],
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'access': accessToken,
+      'refresh': refreshToken,
+    };
   }
 }

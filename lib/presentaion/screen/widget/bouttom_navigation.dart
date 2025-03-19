@@ -17,7 +17,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
   final List<Widget> pages = const [
     HomePage(),
     ProfileScreen(),
-    // ResumeEvaluatorApp(),
+    ResumeEvaluatorApp(),
     ConvertCvScreen(),
     QuizScreen(),
   ];

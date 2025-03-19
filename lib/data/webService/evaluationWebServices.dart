@@ -4,6 +4,7 @@ import 'package:http_parser/http_parser.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:devloper_app/data/models/evaluation.dart';
 import '../../constants/String.dart';
+import '../../presentaion/screen/token_manger.dart';
 
 class ResumeWebServices {
   final Dio dio;
@@ -51,8 +52,12 @@ class ResumeWebServices {
       }
 
       // TODO: get the token from shared-pref
-      String accessToken =
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQyNDEwMzAwLCJpYXQiOjE3NDI0MDY3MDAsImp0aSI6IjRmOGJiMTc1MWE4MTRlNjhiNjQxNjAxOGVmYjllMWU0IiwidXNlcl9pZCI6MTN9.9fGOQ5QzMZ6ZlNceDJvONEqrGiq5Eouif_8FYJKH-JA";
+      String? accessToken = await TokenManager.getAccessToken();
+      if (accessToken == null) {
+        print("Error: access token not found");
+        throw Exception("access token not found");
+      }
+
       final response = await dio.post(
         'resume/evaluation-resume/',
         data: formData,
