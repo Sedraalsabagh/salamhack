@@ -1,22 +1,21 @@
 import 'package:devloper_app/app_router.dart';
-import 'package:devloper_app/business_logic/cubit/evaluations_cubit.dart';
 import 'package:devloper_app/business_logic/cubit/recommentaion_cubit.dart';
-import 'package:devloper_app/data/repository/evaluation.dart';
 import 'package:devloper_app/data/repository/recommendation.dart';
-import 'package:devloper_app/data/webService/evaluationWebServices.dart';
 import 'package:devloper_app/data/webService/recommendation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'business_logic/cubit/auth_cubit.dart';
-import 'business_logic/cubit/cv_cubit.dart';
-import 'data/repository/CVRepository.dart';
+
 import 'data/repository/auth.dart';
-import 'data/webService/CVWebServices.dart';
+
+import 'package:devloper_app/presentaion/screen/ResumeEvaluator.dart';
 import 'data/webService/auth.dart';
-import 'presentaion/screen/widget/bouttom_navigation.dart';
 
 void main() {
   final appRouter = AppRouter();
+
+  print("\n---------------------------------\n");
+  print(ResumeEvaluatorApp);
 
   runApp(
     MultiBlocProvider(

@@ -1,69 +1,84 @@
 import 'dart:io' show Platform;
 import 'package:dio/dio.dart';
+import 'package:http_parser/http_parser.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:devloper_app/data/models/evaluation.dart';
-import '../../constants/String.dart'; 
+import '../../constants/String.dart';
 
 class ResumeWebServices {
   final Dio dio;
-  
 
   ResumeWebServices()
       : dio = Dio(BaseOptions(
-          baseUrl: baseUrl, 
+          baseUrl: baseUrl,
           receiveDataWhenStatusError: true,
           connectTimeout: const Duration(seconds: 60),
           receiveTimeout: const Duration(seconds: 60),
         ));
 
   Future<ResumeEvaluationResult> evaluateResume({
-    
     required String jobDescription,
-    String? filePath,     
-    List<int>? fileBytes, 
-    String? fileName,     
+    String? filePath,
+    List<int>? fileBytes,
+    String? fileName,
   }) async {
     try {
       FormData formData;
       if (kIsWeb) {
-        // في الويب
         if (fileBytes == null || fileName == null) {
           throw Exception('لم يتم اختيار الملف بشكل صحيح على الويب');
+        }
+        if (!fileName.toLowerCase().endsWith(".pdf")) {
+          throw Exception("File format excpetion, support only PDF");
         }
         formData = FormData.fromMap({
           'job_description': jobDescription,
           'pdf_file': MultipartFile.fromBytes(
             fileBytes,
             filename: fileName,
+            contentType: MediaType('application', 'pdf'),
           ),
         });
       } else {
-        if (filePath == null) {
+        if (filePath == null || fileName == null) {
           throw Exception('لم يتم اختيار الملف بشكل صحيح على الهاتف/الكمبيوتر');
         }
         formData = FormData.fromMap({
           'job_description': jobDescription,
-          'pdf_file': await MultipartFile.fromFile(filePath),
+          'pdf_file':
+              await MultipartFile.fromFile(filePath, filename: fileName),
         });
       }
-String accessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQzNjY5Njg3LCJpYXQiOjE3NDIzNzM2ODcsImp0aSI6ImU3NjYwZTJjZGQyMDQ4YmFhZDhkZWFhNDkwMzcyZjYyIiwidXNlcl9pZCI6OX0.DTUfSzLzPOzdYqx23qM3tQjC0OZ3_lQ1_Z7DNwErgk0";
+
+      // TODO: get the token from shared-pref
+      String accessToken =
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQyNDEwMzAwLCJpYXQiOjE3NDI0MDY3MDAsImp0aSI6IjRmOGJiMTc1MWE4MTRlNjhiNjQxNjAxOGVmYjllMWU0IiwidXNlcl9pZCI6MTN9.9fGOQ5QzMZ6ZlNceDJvONEqrGiq5Eouif_8FYJKH-JA";
       final response = await dio.post(
-        'resume/evaluation-resume/', 
+        'resume/evaluation-resume/',
         data: formData,
         options: Options(
           headers: {
-           'Authorization': 'Bearer $accessToken',
+            'Authorization': 'Bearer $accessToken',
             'Accept': 'application/json',
+            'Content-Type': 'multipart/form-data',
           },
         ),
       );
 
-      if (response.statusCode == 200) {
+      if (response.statusCode == 201 || response.statusCode == 200) {
         return ResumeEvaluationResult.fromJson(response.data);
       } else {
-        throw Exception('فشل تقييم السيرة الذاتية. كود الاستجابة: ${response.statusCode}');
+        print("❌ Server Error: ${response.data}");
+        throw Exception(
+            'فشل تقييم السيرة الذاتية. كود الاستجابة: ${response.statusCode}');
       }
     } catch (e) {
+      if (e is DioException) {
+        print("❌ Dio Error: ${e.response?.data}");
+        print("❌ Status Code: ${e.response?.statusCode}");
+      } else {
+        print("❌ Unknown Error: $e");
+      }
       throw Exception('خطأ أثناء تقييم السيرة الذاتية: $e');
     }
   }

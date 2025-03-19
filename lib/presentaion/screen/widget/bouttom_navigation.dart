@@ -1,11 +1,9 @@
-import 'package:devloper_app/presentaion/screen/Home.dart';
-import 'package:devloper_app/presentaion/screen/ResumeEvaluator.dart';
-import 'package:devloper_app/presentaion/screen/convertCV.dart';
-import 'package:devloper_app/presentaion/screen/quiz_screen.dart';
-
 import 'package:flutter/material.dart';
-
+import '../Home.dart';
+import 'package:devloper_app/presentaion/screen/ResumeEvaluator.dart';
+import '../convertCV.dart';
 import '../profile_screen.dart';
+import '../quiz_screen.dart';
 
 class BottomNavigation extends StatefulWidget {
   const BottomNavigation({super.key});
@@ -16,7 +14,6 @@ class BottomNavigation extends StatefulWidget {
 
 class _BottomNavigationState extends State<BottomNavigation> {
   int myCurrentIndex = 0;
-
   final List<Widget> pages = const [
     HomePage(),
     ProfileScreen(),

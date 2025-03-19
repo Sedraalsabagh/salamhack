@@ -10,7 +10,6 @@ import 'experience_screen.dart';
 import 'personal_details.dart';
 import 'project_screen.dart';
 import 'widget/Listitem.dart';
-import 'widget/bottom_button.dart';
 import 'widget/section_title.dart';
 import 'skills_screen.dart';
 

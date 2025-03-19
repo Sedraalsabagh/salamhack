@@ -1,4 +1,5 @@
 import 'dart:typed_data';
+import 'package:devloper_app/constants/Colors.dart';
 import 'package:flutter/material.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
@@ -28,7 +29,15 @@ class _AtsResumePdfScreenState extends State<AtsResumePdfScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('ATS Resume PDF')),
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(60),
+        child: AppBar(
+          flexibleSpace: Container(
+            decoration: BoxDecoration(gradient: MyColors.myGreadient1),
+          ),
+          title: const Text('ATS Resume PDF'),
+        ),
+      ),
       body: FutureBuilder<Uint8List>(
         future: _pdfFuture,
         builder: (context, snapshot) {
@@ -72,12 +81,18 @@ class _AtsResumePdfScreenState extends State<AtsResumePdfScreen> {
                 pw.Text('Personal Details',
                     style: pw.TextStyle(
                         fontSize: 18, fontWeight: pw.FontWeight.bold)),
-                pw.Text('Name: ${personal?.name ?? 'N/A'}'),
-                pw.Text('Email: ${personal?.email ?? 'N/A'}'),
-                pw.Text('Phone: ${personal?.phone ?? 'N/A'}'),
-                pw.Text('Location: ${personal?.location ?? 'N/A'}'),
-                pw.Text('GitHub: ${personal?.githubLink ?? 'N/A'}'),
-                pw.Text('LinkedIn: ${personal?.linkedinLink ?? 'N/A'}'),
+                pw.Text('Name: ${personal?.name ?? 'N/A'}',
+                    style: const pw.TextStyle(fontSize: 16)),
+                pw.Text('Email: ${personal?.email ?? 'N/A'}',
+                    style: const pw.TextStyle(fontSize: 16)),
+                pw.Text('Phone: ${personal?.phone ?? 'N/A'}',
+                    style: const pw.TextStyle(fontSize: 16)),
+                pw.Text('Location: ${personal?.location ?? 'N/A'}',
+                    style: const pw.TextStyle(fontSize: 16)),
+                pw.Text('GitHub: ${personal?.githubLink ?? 'N/A'}',
+                    style: const pw.TextStyle(fontSize: 16)),
+                pw.Text('LinkedIn: ${personal?.linkedinLink ?? 'N/A'}',
+                    style: const pw.TextStyle(fontSize: 16)),
                 pw.Divider(),
 
                 // Summary
@@ -102,11 +117,15 @@ class _AtsResumePdfScreenState extends State<AtsResumePdfScreen> {
                             child: pw.Column(
                               crossAxisAlignment: pw.CrossAxisAlignment.start,
                               children: [
-                                pw.Text('Degree: ${edu.degree ?? 'N/A'}'),
+                                pw.Text('Degree: ${edu.degree ?? 'N/A'}',
+                                    style: const pw.TextStyle(fontSize: 16)),
                                 pw.Text(
-                                    'Institution: ${edu.institution ?? 'N/A'}'),
-                                pw.Text('Start: ${edu.startDate ?? 'N/A'}'),
-                                pw.Text('End: ${edu.endDate ?? 'N/A'}'),
+                                    'Institution: ${edu.institution ?? 'N/A'}',
+                                    style: const pw.TextStyle(fontSize: 16)),
+                                pw.Text('Start: ${edu.startDate ?? 'N/A'}',
+                                    style: const pw.TextStyle(fontSize: 16)),
+                                pw.Text('End: ${edu.endDate ?? 'N/A'}',
+                                    style: const pw.TextStyle(fontSize: 16)),
                               ],
                             ),
                           );
@@ -148,12 +167,17 @@ class _AtsResumePdfScreenState extends State<AtsResumePdfScreen> {
                             child: pw.Column(
                               crossAxisAlignment: pw.CrossAxisAlignment.start,
                               children: [
-                                pw.Text('Job Title: ${exp.jobTitle ?? 'N/A'}'),
-                                pw.Text('Company: ${exp.company ?? 'N/A'}'),
-                                pw.Text('Start: ${exp.startDate ?? 'N/A'}'),
-                                pw.Text('End: ${exp.endDate ?? 'N/A'}'),
+                                pw.Text('Job Title: ${exp.jobTitle ?? 'N/A'}',
+                                    style: const pw.TextStyle(fontSize: 16)),
+                                pw.Text('Company: ${exp.company ?? 'N/A'}',
+                                    style: const pw.TextStyle(fontSize: 16)),
+                                pw.Text('Start: ${exp.startDate ?? 'N/A'}',
+                                    style: const pw.TextStyle(fontSize: 16)),
+                                pw.Text('End: ${exp.endDate ?? 'N/A'}',
+                                    style: const pw.TextStyle(fontSize: 16)),
                                 pw.Text(
-                                    'Description: ${exp.description ?? 'N/A'}'),
+                                    'Description: ${exp.description ?? 'N/A'}',
+                                    style: const pw.TextStyle(fontSize: 16)),
                               ],
                             ),
                           );

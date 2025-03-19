@@ -1,5 +1,4 @@
 import 'package:devloper_app/constants/Colors.dart';
-import 'package:devloper_app/presentaion/screen/Home.dart';
 import 'package:devloper_app/presentaion/screen/logIn.dart';
 
 import 'package:flutter/material.dart';
@@ -17,7 +16,7 @@ class _MyWidgetState extends State<Welcomescreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 243, 242, 244),
+      backgroundColor: const Color.fromARGB(255, 243, 242, 244),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Column(
@@ -49,7 +48,7 @@ class _MyWidgetState extends State<Welcomescreen> {
                         height: 1.4,
                       ),
                     ),
-                    TextSpan(
+                    const TextSpan(
                       text: "Here",
                       style: TextStyle(
                         color: MyColors.myText,
@@ -81,7 +80,7 @@ class _MyWidgetState extends State<Welcomescreen> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => LogIn()),
+                      MaterialPageRoute(builder: (context) => const LogIn()),
                     );
                   },
                   text: "Get started",
