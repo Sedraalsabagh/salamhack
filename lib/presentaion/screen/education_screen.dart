@@ -1,5 +1,9 @@
+import 'package:devloper_app/data/models/cvmodel.dart';
 import 'package:flutter/material.dart';
-import 'widget/custom_field.dart'; // تأكد من أنك أضفت CustomField هنا
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../business_logic/cubit/cv_cubit.dart';
+import '../../data/models/convertcvmodel.dart';
+import 'widget/custom_field.dart';
 import 'profile_screen.dart';
 
 class EducationScreen extends StatefulWidget {
@@ -51,10 +55,30 @@ class _EducationScreenState extends State<EducationScreen> {
   }
 
   void _saveEducationDetails() {
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => const ProfileScreen()),
-    );
+    final cubit = BlocProvider.of<CvCubit>(context);
+
+    for (var controllers in _educationControllers) {
+      if (controllers[0].text.isEmpty ||
+          controllers[1].text.isEmpty ||
+          controllers[2].text.isEmpty ||
+          controllers[3].text.isEmpty ||
+          controllers[4].text.isEmpty) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Please fill all the fields')),
+        );
+        return;
+      }
+      final education = EducationCV(
+        institution: controllers[0].text,
+        degree: controllers[1].text,
+        description: controllers[2].text,
+        startDate: controllers[3].text,
+        endDate: controllers[4].text,
+      );
+      cubit.addEducation(education);
+    }
+
+    Navigator.pop(context);
   }
 
   @override

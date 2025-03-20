@@ -7,8 +7,8 @@ class CVRepository {
   CVRepository({required this.cvWebServices});
 
   Future<Map<String, dynamic>> createCV(CVModel cvModel) {
-    return cvWebServices.createCV(cvModel);
+    return cvWebServices.createCV(cvModel.toJson());
 
-    // الاحسن معالجة الاخظاء تكون بالويب سيرفر
+    //
   }
 }

@@ -36,7 +36,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
     final cvCubit = context.read<CvCubit>();
 
     final cvModel = CVModel(
-      name: nameController.text,
+      // usename: nameController.text,
       email: emailController.text,
       phone: phoneController.text,
       location: locationController.text,

@@ -11,6 +11,13 @@ class CvCubit extends Cubit<CvState> {
 
   CvCubit(this.cvRepository) : super(CVInitial());
 
+  List<EducationCV> educationList = [];
+
+  void addEducation(EducationCV education) {
+    educationList.add(education);
+    emit(CVSectionUpdated());
+  }
+
   Future<void> createCV(CVModel cvModel) async {
     emit(CVLoading());
     try {

@@ -1,6 +1,5 @@
-import 'package:devloper_app/constants/String.dart'; // تأكد من كتابة string.dart بحروف صغيرة
+import 'package:devloper_app/constants/String.dart';
 import 'package:dio/dio.dart';
-import '../models/cvmodel.dart';
 
 class CVWebServices {
   final Dio dio;
@@ -13,11 +12,11 @@ class CVWebServices {
           receiveTimeout: Duration(seconds: 60),
         ));
 
-  Future<Map<String, dynamic>> createCV(CVModel cvModel) async {
+  Future<Map<String, dynamic>> createCV(Map<String, dynamic> cvJson) async {
     try {
       Response response = await dio.post(
         '/resume/generate-resume/',
-        data: cvModel.toJson(),
+        data: cvJson,
         options: Options(
           headers: {
             'Content-Type': 'application/json',

@@ -1,25 +1,26 @@
 class CVModel {
-  final String? name;
+  final String? username;
   final String? email;
   final String? phone;
   final String? location;
-
   final String? githubLink;
   final String? linkedinLink;
+  final String? summary;
   final List<Skill>? skills;
-  final List<Education>? education;
+  final List<EducationCV>? education;
   final List<Project>? projects;
   final List<Experience>? experiences;
   final List<TrainingCourse>? trainingsCourses;
 
   CVModel({
-    this.name,
+    this.username,
     this.email,
     this.phone,
     this.location,
     this.githubLink,
     this.linkedinLink,
     this.skills,
+    this.summary,
     this.education,
     this.projects,
     this.experiences,
@@ -27,7 +28,7 @@ class CVModel {
   });
 
   Map<String, dynamic> toJson() => {
-        "name": name,
+        "username": username,
         "email": email,
         "phone": phone,
         "location": location,
@@ -42,15 +43,16 @@ class CVModel {
 
   factory CVModel.fromJson(Map<String, dynamic> json) {
     return CVModel(
-      name: json["name"],
+      username: json["username"],
       email: json["email"],
       phone: json["phone"],
       location: json["location"],
       githubLink: json["github_link"],
       linkedinLink: json["linkedin_link"],
+      summary: json["summary"],
       skills: (json["skills"] as List?)?.map((s) => Skill.fromJson(s)).toList(),
       education: (json["education"] as List?)
-          ?.map((e) => Education.fromJson(e))
+          ?.map((e) => EducationCV.fromJson(e))
           .toList(),
       projects:
           (json["projects"] as List?)?.map((p) => Project.fromJson(p)).toList(),
@@ -83,14 +85,14 @@ class Skill {
   }
 }
 
-class Education {
+class EducationCV {
   final String? degree;
   final String? institution;
   final String? description;
   final String? startDate;
   final String? endDate;
 
-  Education({
+  EducationCV({
     this.degree,
     this.institution,
     this.description,
@@ -106,8 +108,8 @@ class Education {
         "end_date": endDate,
       };
 
-  factory Education.fromJson(Map<String, dynamic> json) {
-    return Education(
+  factory EducationCV.fromJson(Map<String, dynamic> json) {
+    return EducationCV(
       degree: json["degree"],
       institution: json["institution"],
       description: json["description"],

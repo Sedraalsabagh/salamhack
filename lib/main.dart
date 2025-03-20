@@ -12,6 +12,10 @@ import 'package:flutter/material.dart';
 import 'package:devloper_app/app_router.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'business_logic/cubit/cv_cubit.dart';
+import 'data/repository/CVRepository.dart';
+import 'data/webService/CVWebServices.dart';
+
 void main() {
   final appRouter = AppRouter();
 
@@ -36,6 +40,10 @@ void main() {
             RecommendationRepository(
                 recommendationWebServices: (RecommendationWebServices())),
           ),
+        ),
+        BlocProvider(
+          create: (context) =>
+              CvCubit(CVRepository(cvWebServices: CVWebServices())),
         ),
       ],
       child: MyWidget(appRouter: appRouter),

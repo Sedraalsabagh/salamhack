@@ -18,3 +18,5 @@ class CVFailure extends CvState {
 }
 
 class CVFilling extends CvState {}
+
+class CVSectionUpdated extends CvState {}
