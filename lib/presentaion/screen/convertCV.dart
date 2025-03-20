@@ -105,6 +105,7 @@ class _ConvertCvScreenState extends State<ConvertCvScreen> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
       child: Card(
+        color:Colors.white,
         elevation: 3,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         child: Container(

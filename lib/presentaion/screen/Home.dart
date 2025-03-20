@@ -48,6 +48,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+          backgroundColor: const Color(0xfff8f9fD),
       appBar: const CustomAppBar(title: "Home"),
       body: SafeArea(
         child: Column(

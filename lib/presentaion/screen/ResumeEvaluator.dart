@@ -87,6 +87,7 @@ class _ResumeEvaluatorAppState extends State<ResumeEvaluatorApp> {
         child: Column(
           children: [
             Card(
+              color:Colors.white,
               elevation: 3,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(16)),
