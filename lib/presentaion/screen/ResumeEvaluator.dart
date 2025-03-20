@@ -1,4 +1,5 @@
 import 'dart:typed_data';
+import 'package:devloper_app/presentaion/screen/widget/custom_app_bar.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -67,22 +68,7 @@ class _ResumeEvaluatorAppState extends State<ResumeEvaluatorApp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: const Text(
-          'Resume Evaluator',
-          style: TextStyle(color: Colors.white),
-        ),
-        flexibleSpace: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              colors: [Color(0xFF4A15F4), Color(0xFF6B1A6B)],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
-          ),
-        ),
-      ),
+      appBar: const CustomAppBar(title: "Evaluate Your Resume"),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -97,7 +83,7 @@ class _ResumeEvaluatorAppState extends State<ResumeEvaluatorApp> {
                 child: Column(
                   children: [
                     const Text(
-                      "In order to be able to evaluate your CV, you must upload it",
+                      "In order to be able to evaluate your Resume, you must upload it",
                       style:
                           TextStyle(fontSize: 17, fontWeight: FontWeight.w500),
                     ),

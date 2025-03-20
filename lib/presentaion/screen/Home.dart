@@ -1,4 +1,5 @@
 import 'package:devloper_app/business_logic/cubit/recommentaion_cubit.dart';
+import 'package:devloper_app/presentaion/screen/widget/custom_app_bar.dart';
 import 'package:devloper_app/presentaion/screen/widget/opportunity_reco.dart';
 import 'package:devloper_app/business_logic/cubit/job_opportunities_cubit.dart';
 import 'package:devloper_app/business_logic/cubit/job_opportunities_state.dart';
@@ -35,6 +36,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar:const CustomAppBar(title: "Home"),
       body: SafeArea(
         child: Column(
           children: [

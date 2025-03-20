@@ -63,7 +63,10 @@ class _QuizScreenState extends State<QuizScreen> {
                 color: Colors.white, fontSize: 20, fontWeight: FontWeight.w500),
           ),
           centerTitle: true,
-           leading: const Icon(Icons.arrow_back, color: Colors.white),
+          leading: IconButton(
+        icon: const Icon(Icons.arrow_back, color: Colors.white),
+        onPressed: () => Navigator.of(context).pop(),
+        ),
           flexibleSpace: Container(
             decoration: const BoxDecoration(
               gradient: LinearGradient(

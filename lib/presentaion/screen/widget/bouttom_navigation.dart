@@ -58,15 +58,15 @@ class _BottomNavigationState extends State<BottomNavigation> {
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(Icons.create, size: 25),
-                  label: "Create CV",
+                  label: "Create Resume",
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(Icons.fact_check),
-                  label: "Evaluate",
+                  label: "Evaluate Resume",
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(Icons.autorenew), // Convert CV
-                  label: "Convert CV",
+                  label: "Convert Resume",
                 ),
                 // BottomNavigationBarItem(
                 //     icon: Icon(Icons.question_answer_outlined), label: "Quiz")

@@ -1,8 +1,10 @@
 import 'package:devloper_app/data/models/convertcvmodel.dart';
 import 'package:devloper_app/presentaion/ResumATS.dart';
+import 'package:devloper_app/presentaion/screen/widget/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:file_picker/file_picker.dart';
+import '../../constants/Colors.dart';
 import '../../business_logic/cubit/resume_cubit.dart';
 import '../../business_logic/cubit/resume_state.dart';
 import '../../data/repository/convertcvrepository.dart';
@@ -17,14 +19,6 @@ class ConvertCvScreen extends StatefulWidget {
 }
 
 class _ConvertCvScreenState extends State<ConvertCvScreen> {
-  final LinearGradient myGradient = const LinearGradient(
-    colors: [
-      Color.fromARGB(255, 91, 45, 240),
-      Color.fromARGB(255, 141, 20, 141),
-    ],
-    begin: Alignment.topLeft,
-    end: Alignment.bottomRight,
-  );
 
   @override
   Widget build(BuildContext context) {
@@ -32,18 +26,7 @@ class _ConvertCvScreenState extends State<ConvertCvScreen> {
       create: (_) => ResumeCubit(ResumeRepository(ResumeWebService())),
       child: Scaffold(
         backgroundColor: const Color(0xfff8f9fD),
-        appBar: AppBar(
-          title: const Text(
-            'Convert CV',
-            style: TextStyle(
-                color: Colors.white, fontSize: 19, fontWeight: FontWeight.w300),
-          ),
-          centerTitle: true,
-          leading: const Icon(Icons.arrow_back, color: Colors.white),
-          flexibleSpace: Container(
-            decoration: BoxDecoration(gradient: myGradient),
-          ),
-        ),
+        appBar: const CustomAppBar(title: "Convert Your Resume"),
         body: BlocBuilder<ResumeCubit, ResumeState>(
           builder: (context, state) {
             Widget content;
@@ -120,7 +103,7 @@ class _ConvertCvScreenState extends State<ConvertCvScreen> {
             children: [
               ShaderMask(
                 shaderCallback: (Rect bounds) {
-                  return myGradient.createShader(bounds);
+                  return MyColors.myGreadient1.createShader(bounds);
                 },
                 blendMode: BlendMode.srcIn,
                 child: const Icon(Icons.upload_file, size: 48),

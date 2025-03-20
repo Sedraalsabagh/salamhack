@@ -1,3 +1,4 @@
+import 'package:devloper_app/presentaion/screen/widget/custom_app_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart'; // ة
@@ -20,25 +21,7 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xfff8f9fD),
-      appBar: AppBar(
-        title: const Text(
-          'Profile',
-          style: TextStyle(
-              color: Colors.white, fontSize: 19, fontWeight: FontWeight.w300),
-        ),
-        centerTitle: true,
-        leading: const Icon(
-          Icons.arrow_back,
-          color: Colors.white,
-        ),
-        flexibleSpace: Container(
-          decoration: const BoxDecoration(
-              gradient: LinearGradient(colors: [
-            Color.fromARGB(255, 91, 45, 240),
-            Color.fromARGB(255, 141, 20, 141),
-          ], begin: Alignment.topLeft, end: Alignment.bottomRight)),
-        ),
-      ),
+      appBar: const CustomAppBar(title: "Create Your Resume"),
       body: BlocProvider(
         create: (_) => CvCubit(CVRepository(cvWebServices: CVWebServices())),
         child: BlocConsumer<CvCubit, CvState>(
