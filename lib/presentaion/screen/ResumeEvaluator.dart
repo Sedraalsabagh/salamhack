@@ -16,6 +16,19 @@ class ResumeEvaluatorApp extends StatefulWidget {
   State<ResumeEvaluatorApp> createState() => _ResumeEvaluatorAppState();
 }
 
+Widget showLoadingIndicator() {
+  return Padding(
+    padding: const EdgeInsets.all(16.0),
+    child: Center(
+      child: Image.asset(
+        'assets/images/Animation.gif',
+        width: 150.0,
+        height: 150.0,
+      ),
+    ),
+  );
+}
+
 class _ResumeEvaluatorAppState extends State<ResumeEvaluatorApp> {
   final TextEditingController _jobDescriptionController =
       TextEditingController();
@@ -74,6 +87,7 @@ class _ResumeEvaluatorAppState extends State<ResumeEvaluatorApp> {
         child: Column(
           children: [
             Card(
+              color:Colors.white,
               elevation: 3,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(16)),
@@ -93,12 +107,12 @@ class _ResumeEvaluatorAppState extends State<ResumeEvaluatorApp> {
                       label: const Text(
                         'Upload Resume',
                         style: TextStyle(
-                            fontWeight: FontWeight.w500,
+                            fontWeight: FontWeight.w600,
                             color: Colors.purple,
                             fontSize: 16,
                             decoration: TextDecoration.underline),
                       ),
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.upload_file,
                         size: 22,
                         color: Colors.purple,
@@ -137,7 +151,7 @@ class _ResumeEvaluatorAppState extends State<ResumeEvaluatorApp> {
                     const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8)),
-                backgroundColor: Color(0xFF4A15F4),
+                backgroundColor: const Color(0xFF4A15F4),
               ),
               child: const Text('Evaluate Resume',
                   style: TextStyle(color: Colors.white, fontSize: 16)),
@@ -147,7 +161,7 @@ class _ResumeEvaluatorAppState extends State<ResumeEvaluatorApp> {
               child: BlocBuilder<ResumeCubit, ResumeState>(
                 builder: (context, state) {
                   if (state is ResumeLoading) {
-                    return const Center(child: CircularProgressIndicator());
+                    return Center(child: showLoadingIndicator());
                   } else if (state is ResumeLoaded) {
                     return _buildResult(state.result);
                   } else if (state is ResumeError) {
@@ -173,18 +187,39 @@ class _ResumeEvaluatorAppState extends State<ResumeEvaluatorApp> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Match Percentage: ${result.matchPercentage * 100}%'),
-          const SizedBox(height: 10),
-          const Text('Missing Keywords:'),
+          Row(
+            children: [
+              const Text('Match Percentage:  ', style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    color: Color(0xFF4A15F4),
+                    fontSize: 16),),
+                       Text('${result.matchPercentage * 100}%',style: const TextStyle(fontSize: 14,fontWeight: FontWeight.w400,color: Colors.black),),
+            ],
+          ) ,
+       
+          const SizedBox(height: 5),
+          const Text(
+            'Missing Keywords:',
+            style: TextStyle(
+                fontWeight: FontWeight.w600,
+                color: Color(0xFF4A15F4),
+                fontSize: 16),
+          ),
+          const SizedBox(height: 4),
           Wrap(
             spacing: 6.0,
             children: result.missingKeywords
-                .map((keyword) => Chip(label: Text(keyword)))
+                .map((keyword) => Chip(label: Text(keyword,style: const TextStyle(fontSize: 14,fontWeight: FontWeight.w400,color: Colors.black),)))
                 .toList(),
           ),
-          const SizedBox(height: 10),
-          const Text('Improvement Tips:'),
-          Text(result.improvementTips),
+          const SizedBox(height: 8),
+          const Text('Improvement Tips:', style: TextStyle(
+                fontWeight: FontWeight.w600,
+                color: Color(0xFF4A15F4),
+                fontSize: 16),
+          ),
+           const SizedBox(height: 4),
+          Text(result.improvementTips,style: const TextStyle(fontSize: 14,fontWeight:FontWeight.w400,color: Colors.black),),
         ],
       ),
     );

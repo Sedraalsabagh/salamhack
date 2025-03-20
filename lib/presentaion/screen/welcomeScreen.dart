@@ -26,11 +26,12 @@ class _MyWidgetState extends State<Welcomescreen> {
             FadeAnimation(
               1,
               const Text(
-                "Find  Your",
+                "Find Your",
                 style: TextStyle(
                   color: MyColors.myText,
                   fontSize: 36,
                   fontWeight: FontWeight.bold,
+                  letterSpacing: 2
                 ),
               ),
             ),
@@ -72,7 +73,7 @@ class _MyWidgetState extends State<Welcomescreen> {
                 ),
               ),
             ),
-            const SizedBox(height: 250),
+            const SizedBox(height: 220),
             FadeAnimation(
               2.5,
               Center(

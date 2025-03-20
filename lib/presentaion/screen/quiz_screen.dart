@@ -1,3 +1,4 @@
+// import 'package:animate_do/animate_do.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -5,7 +6,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../business_logic/cubit/quiz_cubit.dart';
 import '../../data/repository/quiz.dart';
 import '../../data/webService/quizWebServices.dart';
-
 
 class QuizScreen extends StatefulWidget {
   final String? jobTitle;
@@ -23,7 +23,10 @@ class _QuizScreenState extends State<QuizScreen> {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _requiredSkillController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
- 
+
+  // متغير لتخزين عنوان الـ AppBar الذي سيتم تحديثه بناءً على المدخلات
+  String? _quizAppBarTitle;
+
   @override
   void initState() {
     super.initState();
@@ -46,7 +49,18 @@ class _QuizScreenState extends State<QuizScreen> {
     _descriptionController.dispose();
     super.dispose();
   }
-
+Widget showLoadingIndicator() {
+  return Padding(
+    padding: const EdgeInsets.all(16.0),
+    child: Center(
+      child: Image.asset(
+        'assets/images/Animation.gif',  
+        width: 150.0,          
+        height: 150.0,
+      ),
+    ),
+  );
+}
   @override
   Widget build(BuildContext context) {
     final questionsRepository = QuestionsRepository(
@@ -57,16 +71,20 @@ class _QuizScreenState extends State<QuizScreen> {
       create: (_) => QuizCubit(questionsRepository: questionsRepository),
       child: Scaffold(
         appBar: AppBar(
-          title: const Text(
-            'MCQ Quiz',
-            style: TextStyle(
-                color: Colors.white, fontSize: 20, fontWeight: FontWeight.w500),
+          // يستخدم العنوان الذي أدخله المستخدم إن وجد، وإلا يظهر العنوان الافتراضي
+          title: Text(
+            _quizAppBarTitle ?? 'MCQ Quiz',
+            style: const TextStyle(
+              color: Colors.white, 
+              fontSize: 20, 
+              fontWeight: FontWeight.w500
+            ),
           ),
           centerTitle: true,
           leading: IconButton(
-        icon: const Icon(Icons.arrow_back, color: Colors.white),
-        onPressed: () => Navigator.of(context).pop(),
-        ),
+            icon: const Icon(Icons.arrow_back, color: Colors.white),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
           flexibleSpace: Container(
             decoration: const BoxDecoration(
               gradient: LinearGradient(
@@ -85,7 +103,7 @@ class _QuizScreenState extends State<QuizScreen> {
             if (state is QuizInitial) {
               return _buildInitialForm(context);
             } else if (state is QuizLoading) {
-              return const Center(child: CircularProgressIndicator());
+              return  Center(child: showLoadingIndicator());
             } else if (state is QuizLoaded) {
               return _buildAllQuestions(context, state);
             } else if (state is QuizError) {
@@ -121,14 +139,16 @@ class _QuizScreenState extends State<QuizScreen> {
                       color: Colors.purple,
                     ),
                   ),
-                  Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Text(
-                      "In order to be able to view and answer the questions\n  you must fill in the following fields",
-                      style: TextStyle(
-                        color: Color.fromARGB(255, 23, 22, 22),
-                        fontSize: 15,
-                        fontWeight: FontWeight.w400,
+                  Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Text(
+                        "In order to be able to view and answer the questions\n  you must fill in the following fields",
+                        style: TextStyle(
+                          color: Color.fromARGB(255, 23, 22, 22),
+                          fontSize: 15,
+                          fontWeight: FontWeight.w400,
+                        ),
                       ),
                     ),
                   ),
@@ -177,6 +197,10 @@ class _QuizScreenState extends State<QuizScreen> {
                         backgroundColor: const Color.fromARGB(255, 154, 70, 168),
                       ),
                       onPressed: () {
+                        // تحديث عنوان الـ AppBar بناءً على قيمة job title المدخلة
+                        setState(() {
+                          _quizAppBarTitle = _titleController.text;
+                        });
                         final title = _titleController.text;
                         final requiredSkill = _requiredSkillController.text;
                         final description = _descriptionController.text;
@@ -254,7 +278,7 @@ class _QuizScreenState extends State<QuizScreen> {
                   )
                 else if (isAnswered && !isCorrect)
                   Text(
-                    'Wrong! \nThe correct answer is :  ${question.answers[question.correctAnswerIndex]}',
+                    'Wrong ❌\nThe correct answer is :  ${question.answers[question.correctAnswerIndex]}',
                     style: const TextStyle(color: Colors.purple, fontWeight: FontWeight.w700),
                   ),
               ],

@@ -17,7 +17,18 @@ class ConvertCvScreen extends StatefulWidget {
   @override
   State<ConvertCvScreen> createState() => _ConvertCvScreenState();
 }
-
+Widget showLoadingIndicator() {
+  return Padding(
+    padding: const EdgeInsets.all(16.0),
+    child: Center(
+      child: Image.asset(
+        'assets/images/Animation.gif',  
+        width: 150.0,          
+        height: 150.0,
+      ),
+    ),
+  );
+}
 class _ConvertCvScreenState extends State<ConvertCvScreen> {
 
   @override
@@ -34,7 +45,7 @@ class _ConvertCvScreenState extends State<ConvertCvScreen> {
             if (state is ResumeInitial) {
               content = _buildUploadCard(context);
             } else if (state is ResumeLoading) {
-              content = const Center(child: CircularProgressIndicator());
+              content =  Center(child: showLoadingIndicator());
             } else if (state is ResumeLoaded) {
               content = Column(
                 children: [
@@ -94,6 +105,7 @@ class _ConvertCvScreenState extends State<ConvertCvScreen> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
       child: Card(
+        color:Colors.white,
         elevation: 3,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         child: Container(

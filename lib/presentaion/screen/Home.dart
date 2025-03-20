@@ -8,6 +8,7 @@ import 'package:devloper_app/presentaion/screen/quiz_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:animate_do/animate_do.dart';
+import 'package:icons_plus/icons_plus.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -15,16 +16,27 @@ class HomePage extends StatefulWidget {
   @override
   State<HomePage> createState() => _HomePageState();
 }
-
+Widget showLoadingIndicator() {
+  return Padding(
+    padding: const EdgeInsets.all(16.0),
+    child: Center(
+      child: Image.asset(
+      'assets/images/Animation.gif',
+        width: 150.0,          
+        height: 150.0,
+      ),
+    ),
+  );
+}
 class _HomePageState extends State<HomePage> {
   var gradientColors = const [Color(0xFF6B1A6B), Color(0xFFB83280)];
 
   // قائمة محلية تحتوي على أسماء الصور
   final List<String> jobImages = [
-   'dev1.jpg',
-      'dev2.jpg',
-      'dev3.jpg',
-      'dev4.jpg',
+    'dev1.jpg',
+    'dev2.jpg',
+    'dev3.jpg',
+    'dev4.jpg',
   ];
 
   @override
@@ -36,7 +48,8 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:const CustomAppBar(title: "Home"),
+          backgroundColor: const Color(0xfff8f9fD),
+      appBar: const CustomAppBar(title: "Home"),
       body: SafeArea(
         child: Column(
           children: [
@@ -57,7 +70,7 @@ class _HomePageState extends State<HomePage> {
               child: BlocBuilder<RecommendationCubit, RecommendationState>(
                 builder: (context, state) {
                   if (state is RecommendationInitial) {
-                    return const Center(child: CircularProgressIndicator());
+                    return  Center(child: showLoadingIndicator());
                   } else if (state is RecommendationLoaded) {
                     return ListView.builder(
                       scrollDirection: Axis.horizontal,
@@ -65,15 +78,17 @@ class _HomePageState extends State<HomePage> {
                       itemCount: state.recommendations.length,
                       itemBuilder: (context, index) {
                         final jobs = state.recommendations[index];
-                        final imageName = jobImages[index % jobImages.length]; // اختيار صورة بشكل دائري
-                        
+                        final imageName = jobImages[
+                            index % jobImages.length]; // اختيار صورة بشكل دائري
+
                         return SizedBox(
                           width: 250,
                           child: JobCard(
                             key: ValueKey('${jobs.title}-${jobs.date}'),
                             title: jobs.title,
                             date: jobs.date,
-                            imageName: imageName, // تمرير اسم الصورة إلى البطاقة
+                            imageName:
+                                imageName, // تمرير اسم الصورة إلى البطاقة
                           ),
                         );
                       },
@@ -85,8 +100,7 @@ class _HomePageState extends State<HomePage> {
                 },
               ),
             ),
-          
-            SizedBox(
+            const SizedBox(
               height: 5,
             ),
             const Align(
@@ -105,7 +119,7 @@ class _HomePageState extends State<HomePage> {
                 child: BlocBuilder<JobCubit, JobState>(
                   builder: (context, state) {
                     if (state is JobLoading) {
-                      return const Center(child: CircularProgressIndicator());
+                      return  Center(child: showLoadingIndicator());
                     } else if (state is JobLoaded) {
                       return ListView.builder(
                         padding: const EdgeInsets.all(16),
@@ -131,7 +145,17 @@ class _HomePageState extends State<HomePage> {
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
-                                    const SizedBox(height: 10),
+
+                                    // const SizedBox(height: 13),
+                                    //   Text(
+                                    //   job.company,
+                                    //   style: const TextStyle(
+                                    //     fontSize: 18,
+                                    //     // color:    Color(0xFFB83280),
+                                    //     fontWeight: FontWeight.bold,
+                                    //   ),
+                                    // ),
+                                    const SizedBox(height: 13),
                                     Text(
                                       job.description,
                                       style: TextStyle(
@@ -139,25 +163,25 @@ class _HomePageState extends State<HomePage> {
                                         color: Colors.grey[600],
                                       ),
                                     ),
-                                    const SizedBox(height: 10),
+                                    const SizedBox(height: 13),
                                     Text(
-                                      job.skills,
+                                      "Required Skills: ${job.skills} ",
                                       style: const TextStyle(
                                         fontSize: 14,
-                                        fontWeight: FontWeight.w500,
+                                        fontWeight: FontWeight.w600,
                                         color: Colors.black,
                                       ),
                                     ),
-                                    const SizedBox(height: 10),
+                                    const SizedBox(height: 13),
                                     Text(
-                                      'Experience ${job.experience}',
+                                      'Experience ${job.experience} years',
                                       style: const TextStyle(
                                         fontSize: 14,
-                                        fontWeight: FontWeight.w500,
+                                        fontWeight: FontWeight.w600,
                                         color: Colors.black,
                                       ),
                                     ),
-                                    const SizedBox(height: 10),
+                                    const SizedBox(height: 13),
                                     Text(
                                       'Location: ${job.location}',
                                       style: const TextStyle(

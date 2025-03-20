@@ -35,7 +35,15 @@ class _AtsResumePdfScreenState extends State<AtsResumePdfScreen> {
           flexibleSpace: Container(
             decoration: BoxDecoration(gradient: MyColors.myGreadient1),
           ),
-          title: const Text('ATS Resume PDF'),
+          title: const Text('ATS Resume PDF',style: TextStyle(color: Colors.white,fontSize: 19, fontWeight: FontWeight.w300),),
+          centerTitle: true,
+            leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+
         ),
       ),
       body: FutureBuilder<Uint8List>(
