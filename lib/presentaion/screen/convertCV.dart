@@ -36,7 +36,7 @@ class _ConvertCvScreenState extends State<ConvertCvScreen> {
     return BlocProvider(
       create: (_) => ResumeCubit(ResumeRepository(ResumeWebService())),
       child: Scaffold(
-        backgroundColor: const Color(0xfff8f9fD),
+        // backgroundColor: const Color(0xfff8f9fD),
         appBar: const CustomAppBar(title: "Convert Your Resume"),
         body: BlocBuilder<ResumeCubit, ResumeState>(
           builder: (context, state) {
