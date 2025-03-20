@@ -14,29 +14,30 @@ class CVWebServices {
         ));
 
   Future<Map<String, dynamic>> createCV(Map<String, dynamic> cvJson) async {
-    Map<String, dynamic> test_data = {
-      "email": "safaabouzaid2@gmail.com",
-      "username": "safa_abouzaid21",
-      "phone": "0912345678",
-      "location": "Damascus, Syria",
-      "linkedin_link": "https://www.linkedin.com/in/safaabouzaid/",
-      "education": [
-        {
-          "degree": "",
-          "institution": "Al-Sham Private University",
-          "start_date": "2021",
-          "end_date": "2025",
-          "description":
-              "Focused on software engineering, machine learning, and backend development."
-        }
-      ]
-    };
+
+  Map<String, dynamic> filteredcvJson = {};
+  for (var entry in cvJson.entries) {
+    var key = entry.key;
+    var value = entry.value;
+
+    if (value is Map<String, dynamic>) {
+      var filteredNested = await createCV(value);
+      if (filteredNested.isNotEmpty) {
+        filteredcvJson[key] = filteredNested;
+      }
+    } else if (value != null) {
+      filteredcvJson[key] = value;
+    }
+  }
+
+    print("\n \n --> in services layer \n \n");
+    print("-->> ${jsonEncode(filteredcvJson)} <<--");
     try {
       Response response = await dio.post(
         '/resume/generate-resume/',
         data:
-            // test_data,
-            jsonEncode(cvJson),
+            // test_data_post_man,
+            jsonEncode(filteredcvJson),
         options: Options(
           headers: {
             'Content-Type': 'application/json',
@@ -44,7 +45,7 @@ class CVWebServices {
           },
         ),
       );
-      print("\n ------- \n${cvJson} \n -------- \n");
+      print("\n ------- \n${filteredcvJson} \n -------- \n");
       print("Response Data: ${response.data}");
       return response.data;
     } on DioError catch (dioError) {

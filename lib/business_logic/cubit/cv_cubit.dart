@@ -56,6 +56,9 @@ class CvCubit extends Cubit<CVModel> {
 
   Future<void> submitCVData() async {
     final cv_data = state;
+    print("\n \t \t -------CV in CUBIT --------\n");
+    print("${cv_data.toJson()}");
+    print("\n------- DONE ----------- \n");
     final response = cvRepository.createCV(cv_data);
   }
 }

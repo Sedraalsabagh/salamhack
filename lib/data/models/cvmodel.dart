@@ -68,33 +68,41 @@ class CVModel {
     );
   }
   CVModel copyWith({
-    String? username,
-    String? email,
-    String? phone,
-    String? location,
-    String? githubLink,
-    String? linkedinLink,
-    String? summary,
-    List<SkillCV>? skills,
-    List<EducationCV>? education,
-    List<ProjectCV>? projects,
-    List<ExperienceCV>? experiences,
-    List<TrainingCourseCV>? trainingsCourses,
-  }) {
-    return CVModel(
-      username: username ?? this.username,
-      email: email ?? this.email,
-      phone: phone ?? this.phone,
-      location: location ?? this.location,
-      githubLink: githubLink ?? this.githubLink,
-      linkedinLink: linkedinLink ?? this.linkedinLink,
-      skills: skills ?? this.skills,
-      education: education ?? this.education,
-      projects: projects ?? this.projects,
-      experiences: experiences ?? this.experiences,
-      trainingsCourses: trainingsCourses ?? this.trainingsCourses,
-    );
-  }
+  String? username,
+  String? email,
+  String? phone,
+  String? location,
+  String? githubLink,
+  String? linkedinLink,
+  String? summary,
+  List<SkillCV>? skills,
+  List<EducationCV>? education,
+  List<ProjectCV>? projects,
+  List<ExperienceCV>? experiences,
+  List<TrainingCourseCV>? trainingsCourses,
+}) {
+  return CVModel(
+    username: _updateField(username, this.username),
+    email: _updateField(email, this.email),
+    phone: _updateField(phone, this.phone),
+    location: _updateField(location, this.location),
+    githubLink: _updateField(githubLink, this.githubLink),
+    linkedinLink: _updateField(linkedinLink, this.linkedinLink),
+    summary: _updateField(summary, this.summary),
+    skills: skills ?? this.skills,
+    education: education ?? this.education,
+    projects: projects ?? this.projects,
+    experiences: experiences ?? this.experiences,
+    trainingsCourses: trainingsCourses ?? this.trainingsCourses,
+  );
+}
+
+T _updateField<T>(T? newValue, T currentValue) {
+  if (newValue == null) return currentValue;
+  if (newValue is String && newValue.isEmpty) return currentValue;
+  return newValue;
+}
+
 }
 
 class SkillCV {
