@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
-
 class JobCard extends StatelessWidget {
   final String title;
   final int date;
+  final String imageName; // اسم الصورة المستلمة
   final List<Color> gradientColors;
 
   const JobCard({
     Key? key,
     required this.title,
     required this.date,
+    required this.imageName, // استقبال اسم الصورة
     this.gradientColors = const [Color(0xFF6B1A6B), Color(0xFFB83280)],
   }) : super(key: key);
 
@@ -31,17 +32,26 @@ class JobCard extends StatelessWidget {
         contentPadding: const EdgeInsets.all(12),
         leading: ClipRRect(
           borderRadius: BorderRadius.circular(12),
-          child: Container(
+          child: Image.asset(
+            'assets/images/$imageName', // تحميل الصورة من مجلد assets
             width: 50,
             height: 50,
-            color: Colors.grey[300],
+            fit: BoxFit.cover,
+            errorBuilder: (context, error, stackTrace) {
+              return Container(
+                width: 50,
+                height: 50,
+                color: Colors.grey[300], // في حال لم يتم العثور على الصورة
+                child: Icon(Icons.image_not_supported, color: Colors.grey),
+              );
+            },
           ),
         ),
         title: Text(
           title,
           style: const TextStyle(
             fontWeight: FontWeight.bold,
-            fontSize: 16,
+            fontSize: 14,
             color: Color(0xFF101010),
           ),
         ),
@@ -58,7 +68,7 @@ class JobCard extends StatelessWidget {
           child: const Icon(
             Icons.favorite_border,
             color: Colors.white,
-            size: 28,
+            size: 20,
           ),
         ),
       ),

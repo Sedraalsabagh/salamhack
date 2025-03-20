@@ -1,8 +1,12 @@
 import 'package:devloper_app/business_logic/cubit/recommentaion_cubit.dart';
 import 'package:devloper_app/presentaion/screen/widget/opportunity_reco.dart';
-
+import 'package:devloper_app/business_logic/cubit/job_opportunities_cubit.dart';
+import 'package:devloper_app/business_logic/cubit/job_opportunities_state.dart';
+import 'package:devloper_app/data/repository/Job_opportunities.dart';
+import 'package:devloper_app/presentaion/screen/quiz_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:animate_do/animate_do.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -12,6 +16,16 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  var gradientColors = const [Color(0xFF6B1A6B), Color(0xFFB83280)];
+
+  // قائمة محلية تحتوي على أسماء الصور
+  final List<String> jobImages = [
+   'dev1.jpg',
+      'dev2.jpg',
+      'dev3.jpg',
+      'dev4.jpg',
+  ];
+
   @override
   void initState() {
     super.initState();
@@ -21,36 +35,175 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: false,
-        title: const Text("Job Opportunities"),
-        backgroundColor: Colors.white,
-        elevation: 0,
-      ),
       body: SafeArea(
-        child: BlocBuilder<RecommendationCubit, RecommendationState>(
-          builder: (context, state) {
-            if (state is RecommendationInitial) {
-              return const Center(child: CircularProgressIndicator());
-            } else if (state is RecommendationLoaded) {
-              return ListView.builder(
-                padding: const EdgeInsets.all(16),
-                itemCount: state.recommendations.length,
-                itemBuilder: (context, index) {
-                  final job = state.recommendations[index];
-                  return JobCard(
-                    key: ValueKey(
-                        '${job.title}-${job.date}'), // Ensure unique keys
-                    title: job.title,
-                    date: job.date,
-                  );
+        child: Column(
+          children: [
+            const SizedBox(height: 19),
+            const Align(
+              alignment: Alignment.topLeft,
+              child: Text(
+                "    Recommended for you ",
+                style: TextStyle(
+                  fontSize: 21,
+                  fontWeight: FontWeight.w700,
+                  color: Color.fromARGB(255, 126, 30, 126),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 190,
+              child: BlocBuilder<RecommendationCubit, RecommendationState>(
+                builder: (context, state) {
+                  if (state is RecommendationInitial) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else if (state is RecommendationLoaded) {
+                    return ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      padding: const EdgeInsets.all(16),
+                      itemCount: state.recommendations.length,
+                      itemBuilder: (context, index) {
+                        final jobs = state.recommendations[index];
+                        final imageName = jobImages[index % jobImages.length]; // اختيار صورة بشكل دائري
+                        
+                        return SizedBox(
+                          width: 250,
+                          child: JobCard(
+                            key: ValueKey('${jobs.title}-${jobs.date}'),
+                            title: jobs.title,
+                            date: jobs.date,
+                            imageName: imageName, // تمرير اسم الصورة إلى البطاقة
+                          ),
+                        );
+                      },
+                    );
+                  } else if (state is RecommendationError) {
+                    return Center(child: Text(state.message));
+                  }
+                  return Container();
                 },
-              );
-            } else if (state is RecommendationError) {
-              return Center(child: Text(state.message));
-            }
-            return Container();
-          },
+              ),
+            ),
+          
+            SizedBox(
+              height: 5,
+            ),
+            const Align(
+              alignment: Alignment.topLeft,
+              child: Text(
+                "    All Job Oppertunities ",
+                style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w700,
+                    color: Color.fromARGB(255, 126, 30, 126)),
+              ),
+            ),
+            Expanded(
+              child: BlocProvider(
+                create: (context) => JobCubit(JobRepository())..loadJobs(),
+                child: BlocBuilder<JobCubit, JobState>(
+                  builder: (context, state) {
+                    if (state is JobLoading) {
+                      return const Center(child: CircularProgressIndicator());
+                    } else if (state is JobLoaded) {
+                      return ListView.builder(
+                        padding: const EdgeInsets.all(16),
+                        itemCount: state.jobs.length,
+                        itemBuilder: (context, index) {
+                          final job = state.jobs[index];
+                          return FadeInUp(
+                            duration:
+                                Duration(milliseconds: 500 + (index * 100)),
+                            child: Card(
+                              color: Colors.white,
+                              elevation: 5,
+                              child: Padding(
+                                padding: const EdgeInsets.all(15),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      job.title,
+                                      style: const TextStyle(
+                                        fontSize: 18,
+                                        // color:    Color(0xFFB83280),
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 10),
+                                    Text(
+                                      job.description,
+                                      style: TextStyle(
+                                        fontSize: 15,
+                                        color: Colors.grey[600],
+                                      ),
+                                    ),
+                                    const SizedBox(height: 10),
+                                    Text(
+                                      job.skills,
+                                      style: const TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 10),
+                                    Text(
+                                      'Experience ${job.experience}',
+                                      style: const TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 10),
+                                    Text(
+                                      'Location: ${job.location}',
+                                      style: const TextStyle(
+                                        fontSize: 14,
+                                        color: Colors.blue,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 10),
+                                    Align(
+                                      alignment: Alignment.bottomRight,
+                                      child: TextButton(
+                                          onPressed: () {
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (_) => QuizScreen(
+                                                  jobTitle: job.title,
+                                                  requiredSkill: job.skills,
+                                                  description: job.description,
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                          child: const Text(
+                                            "Take to quiz",
+                                            style: TextStyle(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w700,
+                                                color: Color(0xFF6B1A6B)),
+                                          )),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                      );
+                    } else if (state is JobError) {
+                      return Center(child: Text('Error: ${state.message}'));
+                    } else {
+                      return const Center(child: Text('No data available'));
+                    }
+                  },
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );

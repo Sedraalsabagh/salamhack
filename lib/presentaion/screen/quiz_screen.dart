@@ -7,7 +7,7 @@ import '../../data/repository/quiz.dart';
 import '../../data/webService/quizWebServices.dart';
 
 class QuizScreen extends StatefulWidget {
-  const QuizScreen({Key? key}) : super(key: key);
+  const QuizScreen({Key? key, required String jobTitle, required String requiredSkill, required String description}) : super(key: key);
 
   @override
   _QuizScreenState createState() => _QuizScreenState();
