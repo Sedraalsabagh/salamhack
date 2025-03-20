@@ -47,14 +47,20 @@ class _SkillsScreenState extends State<SkillsScreen> {
   }
 
   void saveSkills() {
-    final cvCubit = context.read<CvCubit>();
-
-    // ignore: unused_local_variable
-    final skills = _skillControllers.map((controllers) {
-      final name = controllers[0].text;
-      final level = controllers[1].text;
-      return Skill(skill: name, level: level);
-    }).toList();
+    final cubit = BlocProvider.of<CvCubit>(context);
+    List<SkillCV> skillsList = [];
+    for (var controllers in _skillControllers) {
+      // Ensure there are at least 2 controllers
+      if (controllers.length >= 2) {
+        skillsList.add(
+          SkillCV(
+            skill: controllers[0].text.trim(),
+            level: controllers[1].text.trim(),
+          ),
+        );
+      }
+    }
+    cubit.updateSkill(skillsList);
 
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(

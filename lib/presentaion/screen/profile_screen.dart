@@ -24,18 +24,18 @@ class ProfileScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: const Color(0xfff8f9fD),
       appBar: const CustomAppBar(title: "Create Your Resume"),
-      body: BlocConsumer<CvCubit, CvState>(
-        listener: (context, state) {
-          if (state is CVSuccess) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('CV submitted successfully')),
-            );
-          } else if (state is CVFailure) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('Error: ${state.error}')),
-            );
-          }
-        },
+      body: BlocBuilder<CvCubit, CVModel>(
+        // builder: (context, state) {
+        //   if (state is CVSuccess) {
+        //     ScaffoldMessenger.of(context).showSnackBar(
+        //       const SnackBar(content: Text('CV submitted successfully')),
+        //     );
+        //   } else if (state is CVFailure) {
+        //     ScaffoldMessenger.of(context).showSnackBar(
+        //       SnackBar(content: Text('Error: ${state.error}')),
+        //     );
+        //   }
+        // },
         builder: (context, state) {
           return Column(
             children: [
@@ -121,21 +121,17 @@ class ProfileScreen extends StatelessWidget {
                 ),
               ),
               ElevatedButton(
-                onPressed: () {
-                  final cubit = BlocProvider.of<CvCubit>(context);
-                  final cvModel = CVModel(
-                    education: cubit.educationList,
-                  );
-                  cubit.createCV(cvModel); // ارسال بيانات السيرة الذاتية
+                onPressed: () async {
+                  await context.read<CvCubit>().submitCVData();
                 },
                 child: const Text("Submit information"),
               ),
-              BlocBuilder<CvCubit, CvState>(
+              /*BlocBuilder<CvCubit, CVModel>(
                 builder: (context, state) {
                   Widget content;
 
                   if (state is CVInitial) {
-                    content = const SizedBox(); // أو يمكن عرض شيء افتراضي
+                    content = const SizedBox();
                   } else if (state is CVLoading) {
                     content = const Center(child: CircularProgressIndicator());
                   } else if (state is CVSuccess) {
@@ -146,7 +142,6 @@ class ProfileScreen extends StatelessWidget {
                           padding: const EdgeInsets.symmetric(horizontal: 16),
                           child: ElevatedButton(
                             onPressed: () async {
-                              // عرض السيرة الذاتية على شاشة الـ ATS
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -186,7 +181,7 @@ class ProfileScreen extends StatelessWidget {
 
                   return SingleChildScrollView(child: content);
                 },
-              ),
+              ),*/
             ],
           );
         },

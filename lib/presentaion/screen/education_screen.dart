@@ -68,14 +68,23 @@ class _EducationScreenState extends State<EducationScreen> {
         );
         return;
       }
-      final education = EducationCV(
-        institution: controllers[0].text,
-        degree: controllers[1].text,
-        description: controllers[2].text,
-        startDate: controllers[3].text,
-        endDate: controllers[4].text,
-      );
-      cubit.addEducation(education);
+
+      List<EducationCV> educationList = [];
+      for (var controllers in _educationControllers) {
+        // Ensure there are at least 5 controllers
+        if (controllers.length >= 5) {
+          educationList.add(
+            EducationCV(
+              institution: controllers[0].text.trim(),
+              degree: controllers[1].text.trim(),
+              description: controllers[2].text.trim(),
+              startDate: controllers[3].text.trim(),
+              endDate: controllers[4].text.trim(),
+            ),
+          );
+        }
+      }
+      cubit.updateEducation(educationList);
     }
 
     Navigator.pop(context);

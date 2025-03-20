@@ -33,18 +33,23 @@ class _PersonalDetailsState extends State<PersonalDetails> {
   }
 
   void savePersonalDetails() {
-    final cvCubit = context.read<CvCubit>();
+    final cubit = BlocProvider.of<CvCubit>(context);
 
-    final cvModel = CVModel(
-      // usename: nameController.text,
+    cubit.updateMainInfo(
+      username: nameController.text,
       email: emailController.text,
       phone: phoneController.text,
       location: locationController.text,
-      githubLink: githubController.text,
-      linkedinLink: linkedinController.text,
+      githublink: githubController.text,
+      linkedinlink: linkedinController.text,
     );
 
-    cvCubit.createCV(cvModel);
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text("Personal details saved successfully!"),
+        backgroundColor: Colors.purple,
+      ),
+    );
 
     Navigator.pop(context);
   }

@@ -6,11 +6,12 @@ class CVModel {
   final String? githubLink;
   final String? linkedinLink;
   final String? summary;
-  final List<Skill>? skills;
+  final List<SkillCV>? skills;
+
   final List<EducationCV>? education;
-  final List<Project>? projects;
-  final List<Experience>? experiences;
-  final List<TrainingCourse>? trainingsCourses;
+  final List<ProjectCV>? projects;
+  final List<ExperienceCV>? experiences;
+  final List<TrainingCourseCV>? trainingsCourses;
 
   CVModel({
     this.username,
@@ -50,35 +51,65 @@ class CVModel {
       githubLink: json["github_link"],
       linkedinLink: json["linkedin_link"],
       summary: json["summary"],
-      skills: (json["skills"] as List?)?.map((s) => Skill.fromJson(s)).toList(),
+      skills:
+          (json["skills"] as List?)?.map((s) => SkillCV.fromJson(s)).toList(),
       education: (json["education"] as List?)
           ?.map((e) => EducationCV.fromJson(e))
           .toList(),
-      projects:
-          (json["projects"] as List?)?.map((p) => Project.fromJson(p)).toList(),
+      projects: (json["projects"] as List?)
+          ?.map((p) => ProjectCV.fromJson(p))
+          .toList(),
       experiences: (json["experiences"] as List?)
-          ?.map((e) => Experience.fromJson(e))
+          ?.map((e) => ExperienceCV.fromJson(e))
           .toList(),
       trainingsCourses: (json["trainings_courses"] as List?)
-          ?.map((t) => TrainingCourse.fromJson(t))
+          ?.map((t) => TrainingCourseCV.fromJson(t))
           .toList(),
+    );
+  }
+  CVModel copyWith({
+    String? username,
+    String? email,
+    String? phone,
+    String? location,
+    String? githubLink,
+    String? linkedinLink,
+    String? summary,
+    List<SkillCV>? skills,
+    List<EducationCV>? education,
+    List<ProjectCV>? projects,
+    List<ExperienceCV>? experiences,
+    List<TrainingCourseCV>? trainingsCourses,
+  }) {
+    return CVModel(
+      username: username ?? this.username,
+      email: email ?? this.email,
+      phone: phone ?? this.phone,
+      location: location ?? this.location,
+      githubLink: githubLink ?? this.githubLink,
+      linkedinLink: linkedinLink ?? this.linkedinLink,
+      skills: skills ?? this.skills,
+      education: education ?? this.education,
+      projects: projects ?? this.projects,
+      experiences: experiences ?? this.experiences,
+      trainingsCourses: trainingsCourses ?? this.trainingsCourses,
     );
   }
 }
 
-class Skill {
+class SkillCV {
   final String? skill;
   final String? level;
 
-  Skill({this.skill, this.level});
+  SkillCV({this.skill, this.level});
 
   Map<String, dynamic> toJson() => {
         "skill": skill,
         "level": level,
       };
 
-  factory Skill.fromJson(Map<String, dynamic> json) {
-    return Skill(
+  factory SkillCV.fromJson(Map<String, dynamic> json) {
+    return SkillCV(
       skill: json["skill"],
       level: json["level"],
     );
@@ -119,12 +150,12 @@ class EducationCV {
   }
 }
 
-class Project {
+class ProjectCV {
   final String? title;
   final String? description;
   final String? githubLink;
 
-  Project({this.title, this.description, this.githubLink});
+  ProjectCV({this.title, this.description, this.githubLink});
 
   Map<String, dynamic> toJson() => {
         "title": title,
@@ -132,8 +163,8 @@ class Project {
         "github_link": githubLink,
       };
 
-  factory Project.fromJson(Map<String, dynamic> json) {
-    return Project(
+  factory ProjectCV.fromJson(Map<String, dynamic> json) {
+    return ProjectCV(
       title: json["title"],
       description: json["description"],
       githubLink: json["github_link"],
@@ -141,14 +172,14 @@ class Project {
   }
 }
 
-class Experience {
+class ExperienceCV {
   final String? jobTitle;
   final String? company;
   final String? startDate;
   final String? endDate;
   final String? description;
 
-  Experience({
+  ExperienceCV({
     this.jobTitle,
     this.company,
     this.startDate,
@@ -164,8 +195,8 @@ class Experience {
         "description": description,
       };
 
-  factory Experience.fromJson(Map<String, dynamic> json) {
-    return Experience(
+  factory ExperienceCV.fromJson(Map<String, dynamic> json) {
+    return ExperienceCV(
       jobTitle: json["job_title"],
       company: json["company"],
       startDate: json["start_date"],
@@ -175,14 +206,14 @@ class Experience {
   }
 }
 
-class TrainingCourse {
+class TrainingCourseCV {
   final String? title;
   final String? institution;
   final String? startDate;
   final String? endDate;
   final String? description;
 
-  TrainingCourse({
+  TrainingCourseCV({
     this.title,
     this.institution,
     this.startDate,
@@ -198,8 +229,8 @@ class TrainingCourse {
         "description": description,
       };
 
-  factory TrainingCourse.fromJson(Map<String, dynamic> json) {
-    return TrainingCourse(
+  factory TrainingCourseCV.fromJson(Map<String, dynamic> json) {
+    return TrainingCourseCV(
       title: json["title"],
       institution: json["institution"],
       startDate: json["start_date"],
